@@ -1,26 +1,135 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ───────────── Brand Design Tokens (Tailwind v4 syntax) ───────────── */
+@theme {
+  /* Colors */
+  --color-chiskop-black: #1c1c1c;
+  --color-chiskop-red: #5b0c10;
+  --color-chiskop-gray: #545454;
+  --color-chiskop-lightGray: #b4b4b4;
+  --color-chiskop-offWhite: #efefef;
+
+  /* Typography Scale */
+  --text-h1: 52.2px;
+  --text-h2: 38.8px;
+  --text-h3: 33.8px;
+  --text-h4: 30.7px;
+  --text-b1: 19.9px;
+  --text-b2: 16px;
+  --text-menu: 15px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ───────────── Base Global Styling ───────────── */
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+  background-color: white;
+  color: var(--color-chiskop-black);
+}
+
+h1 {
+  font-size: var(--text-h1);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: var(--text-h2);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+h3 {
+  font-size: var(--text-h3);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h4 {
+  font-size: var(--text-h4);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+p {
+  font-size: var(--text-b2);
+  line-height: 1.6;
+}
+
+/* Buttons */
+.btn {
+  background-color: var(--color-chiskop-red);
+  color: white;
+  font-size: var(--text-menu);
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.btn:hover {
+  background-color: #7c1217;
+}
+
+/* Utility helpers */
+.text-chiskop-red {
+  color: var(--color-chiskop-red);
+}
+.text-chiskop-gray {
+  color: var(--color-chiskop-gray);
+}
+.bg-chiskop-red {
+  background-color: var(--color-chiskop-red);
+}
+.bg-chiskop-black {
+  background-color: var(--color-chiskop-black);
+}
+
+/* ───────────── Layout & Grid System ───────────── */
+@layer components {
+  /* Responsive section containers */
+  .section {
+    @apply max-w-[1200px] mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24;
+  }
+
+  .section-narrow {
+    @apply max-w-[900px] mx-auto px-4 md:px-6 py-12 md:py-20;
+  }
+
+  /* Grids */
+  .grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12;
+  }
+
+  .grid-3 {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-8;
+  }
+
+  /* Vertical rhythm helpers */
+  .spacer-lg {
+    @apply mt-24 md:mt-32;
+  }
+
+  .spacer-md {
+    @apply mt-12 md:mt-16;
+  }
+
+  .spacer-sm {
+    @apply mt-6 md:mt-8;
+  }
+
+  /* Section background presets */
+  .bg-section-dark {
+    background-color: var(--color-chiskop-black);
+    color: white;
+  }
+
+  .bg-section-light {
+    background-color: var(--color-chiskop-offWhite);
+    color: var(--color-chiskop-black);
+  }
+
+  .bg-section-gradient {
+    background: linear-gradient(90deg, #1c1c1c 0%, #efefef 100%);
+    color: white;
+  }
 }
