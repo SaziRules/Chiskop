@@ -16,7 +16,7 @@
   --text-h4: 30.7px;
   --text-b1: 19.9px;
   --text-b2: 16px;
-  --text-menu: 15px;
+  --text-menu: 16px;
 }
 
 /* ───────────── Base Global Styling ───────────── */
@@ -27,7 +27,12 @@ body {
   color: var(--color-chiskop-black);
 }
 
-h1 {
+
+
+
+
+@layer base {
+  h1 {
   font-size: var(--text-h1);
   font-weight: 700;
   line-height: 1.1;
@@ -55,15 +60,16 @@ p {
   font-size: var(--text-b2);
   line-height: 1.6;
 }
+}
 
 /* Buttons */
 .btn {
   background-color: var(--color-chiskop-red);
   color: white;
   font-size: var(--text-menu);
-  font-weight: 500;
+  font-weight: 700;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  border-radius: 10px;
   transition: background-color 0.3s ease;
 }
 .btn:hover {

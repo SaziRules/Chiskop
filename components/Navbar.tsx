@@ -82,7 +82,7 @@ export default function Navbar() {
           {/* ───────────── Mobile Menu Button ───────────── */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden text-black text-2xl ml-auto mr-1.5"
+            className="md:hidden text-chiskop-gray font-bold text-3xl ml-auto mr-1.5"
             aria-label="Toggle menu"
           >
             ☰
