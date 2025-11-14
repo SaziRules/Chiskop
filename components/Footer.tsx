@@ -1,6 +1,14 @@
+"use client";
+
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // ⭐ DO NOT RENDER FOOTER ON SANITY STUDIO ROUTES
+  if (pathname?.startsWith("/studio")) return null;
+
   return (
     <footer className="bg-[#f9f7f6] text-chiskop-black">
       {/* ───────────── Footer Grid ───────────── */}
@@ -40,7 +48,6 @@ export default function Footer() {
 
         {/* ───────────── Column 4: Customer Care + Socials ───────────── */}
         <div className="flex flex-col gap-6 md:gap-4 text-[15px] md:text-[15px] items-start md:items-end">
-          {/* Contact Info */}
           <div className="text-left md:text-right">
             <p className="font-bold mb-1">Customer Care</p>
             <p>08:00 – 17:00</p>
@@ -60,7 +67,6 @@ export default function Footer() {
             <p>0157</p>
           </div>
 
-          {/* Social Icons */}
           <div className="flex items-center justify-center gap-4 mt-6">
             <div className="w-8 h-8 rounded-full bg-[#595959] flex items-center justify-center hover:bg-chiskop-red transition-colors duration-300 cursor-pointer">
               <FaFacebookF className="text-white text-[14px]" />
@@ -78,7 +84,6 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ───────────── Divider & Copyright ───────────── */}
       <div className="border-t border-chiskop-gray mt-8 md:mt-10" />
       <p className="text-center py-4 md:py-6 text-[13px] tracking-wide">
         COPYRIGHT @CHISKOP FOR MEN FOR MEN 2025

@@ -139,3 +139,15 @@ p {
     color: white;
   }
 }
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+.animate-fadeIn {
+  animation: fadeIn .45s forwards;
+}
+.contact-input {
+  @apply w-full border border-gray-300 rounded-md px-4 py-3 text-[15px] focus:outline-none focus:border-chiskop-red;
+}
+
+

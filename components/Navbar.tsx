@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
+   // DO NOT RENDER NAVBAR ON SANITY STUDIO ROUTES
+  if (pathname?.startsWith("/studio")) return null;
   const [open, setOpen] = useState(false);
 
   const links = [
@@ -14,11 +16,17 @@ export default function Navbar() {
     { name: "PRODUCTS", href: "/products" },
     { name: "CHISKOP ZONE", href: "/chiskop-zone" },
     { name: "SALON", href: "/salon" },
-    { name: "CONTACT US", href: "/contact" },
+    { name: "CONTACT US", href: "/contact-us" },
   ];
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname?.startsWith(href);
+  const isActive = (href: string) => {
+  if (href === "/") return pathname === "/";
+  if (href === "/products") {
+    return pathname?.startsWith("/products") || pathname?.startsWith("/product");
+  }
+  return pathname?.startsWith(href);
+};
+
 
   // Close drawer with Escape key
   useEffect(() => {

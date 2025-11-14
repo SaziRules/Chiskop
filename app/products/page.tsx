@@ -43,8 +43,7 @@ export default function ProductsPage() {
       {/* ───────────── Banner ───────────── */}
       <GlobalBanner
         title="Our Products"
-        heightClass="h-[400px] md:h-[500px]"
-        imageUrl="/images/products/banner-bg.jpg"
+        height="h-[400px] md:h-[500px]"
       />
 
         {/* ───────────── Products ───────────── */}

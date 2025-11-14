@@ -8,7 +8,7 @@ export default function RetailerStrip() {
       <Container className="max-w-[1000px] flex items-center justify-center flex-wrap gap-x-10 gap-y-6 md:gap-x-14">
         {/* Clicks */}
         <Image
-          src="/images/logos/clicks.png"
+          src="/images/store.png"
           alt="Clicks"
           width={90}
           height={40}
@@ -17,7 +17,7 @@ export default function RetailerStrip() {
 
         {/* Dis-Chem */}
         <Image
-          src="/images/logos/dischem.png"
+          src="/images/store.png"
           alt="Dis-Chem"
           width={100}
           height={40}
@@ -26,7 +26,7 @@ export default function RetailerStrip() {
 
         {/* Pick n Pay */}
         <Image
-          src="/images/logos/picknpay.png"
+          src="/images/store.png"
           alt="Pick n Pay"
           width={110}
           height={40}
@@ -35,7 +35,7 @@ export default function RetailerStrip() {
 
         {/* Takealot */}
         <Image
-          src="/images/logos/takealot.png"
+          src="/images/store.png"
           alt="Takealot"
           width={100}
           height={40}
@@ -44,7 +44,7 @@ export default function RetailerStrip() {
 
         {/* Shoprite */}
         <Image
-          src="/images/logos/shoprite.png"
+          src="/images/store.png"
           alt="Shoprite"
           width={110}
           height={40}
