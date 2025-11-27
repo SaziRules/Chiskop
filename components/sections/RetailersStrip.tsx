@@ -1,55 +1,39 @@
+import Marquee from "react-fast-marquee";
+
 import Image from "next/image";
 import Section from "@/components/Section";
 import Container from "@/components/Container";
+import Link from "next/link";
 
-export default function RetailerStrip() {
+export default function RetailerStrip({ retailers }: { retailers: any[] }) {
   return (
     <Section variant="default" className="py-12 bg-white border-t border-[#f0f0f0]">
-      <Container className="max-w-[1000px] flex items-center justify-center flex-wrap gap-x-10 gap-y-6 md:gap-x-14">
-        {/* Clicks */}
-        <Image
-          src="/images/store.png"
-          alt="Clicks"
-          width={90}
-          height={40}
-          className="object-contain"
-        />
+      <Container className="max-w-[1600px] overflow-hidden overflow-y-hidden!important">
 
-        {/* Dis-Chem */}
-        <Image
-          src="/images/store.png"
-          alt="Dis-Chem"
-          width={100}
-          height={40}
-          className="object-contain"
-        />
+        <Marquee
+        className="overflow-hidden overflow-y-hidden!"
+          pauseOnHover
+          speed={40}
+          gradient={false}
+        >
+          {retailers.map((r, i) => (
+            <Link
+              key={i}
+              href={r.url || "#"}
+              target="_blank"
+              className="mx-10 flex items-center justify-center min-w-[200px] h-[140px]"
+            >
+              <Image
+                src={r.logo}
+                alt={r.name}
+                width={200}
+                height={140}
+                className="object-contain"
+              />
+            </Link>
+          ))}
+        </Marquee>
 
-        {/* Pick n Pay */}
-        <Image
-          src="/images/store.png"
-          alt="Pick n Pay"
-          width={110}
-          height={40}
-          className="object-contain"
-        />
-
-        {/* Takealot */}
-        <Image
-          src="/images/store.png"
-          alt="Takealot"
-          width={100}
-          height={40}
-          className="object-contain"
-        />
-
-        {/* Shoprite */}
-        <Image
-          src="/images/store.png"
-          alt="Shoprite"
-          width={110}
-          height={40}
-          className="object-contain"
-        />
       </Container>
     </Section>
   );

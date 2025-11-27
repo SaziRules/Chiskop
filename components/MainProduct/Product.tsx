@@ -62,7 +62,7 @@ export default function Product({ product }: ProductProps) {
       alt={title || "Chiskop Product"}
       width={500}
       height={500}
-      className="object-contain w-auto h-[400px] md:h-[460px]"
+      className="object-contain w-auto h-[400px] md:h-[520px]"
     />
   </div>
 </div>
@@ -72,7 +72,7 @@ export default function Product({ product }: ProductProps) {
           {/* RIGHT — Product Info */}
           <div className="flex flex-col justify-center space-y-5 max-w-[500px] mx-auto md:mx-0">
             {/* Product Title */}
-            <h1 className="text-[24px] md:text-[34px] font-semibold leading-tight text-chiskop-black text-left">
+            <h1 className="text-[24px] md:text-[34px] font-semibold leading-tight text-chiskop-black text-left capitalize">
               {title}
             </h1>
 

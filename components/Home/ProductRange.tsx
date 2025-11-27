@@ -34,26 +34,31 @@ async function fetchProductRange(): Promise<{ home: ProductItem[]; salon: Produc
 
   const allProducts = await client.fetch(query);
 
-  /* ---- HOME SOLUTIONS (FORCE 3 ITEMS) ---- */
-  const homeProductsRaw = allProducts.filter((p: any) => p.category === "home");
+  /* ---- HOME SOLUTIONS (only show 80g, 200g, 50g) ---- */
+const homeProductsRaw = allProducts.filter((p: any) => p.category === "home");
 
-  let home: ProductItem[] = [];
+let home: ProductItem[] = [];
 
-  for (const product of homeProductsRaw) {
-    // Loop through variants to build independent items
-    product.variants.forEach((v: any) => {
-      home.push({
-        title: product.title,
-        category: `For Head & Body | ${v.sizeLabel}`,
-        img: v.img,
-        link: `/mainProduct/${product.slug.current}`,
+for (const product of homeProductsRaw) {
+  product.variants.forEach((v: any) => {
+    if (!v?.sizeLabel) return;
 
-      });
+    const size = v.sizeLabel.trim().toLowerCase();
+
+    // Only allow these exact 3:
+    const allowedSizes = ["80g", "200g", "50g"];
+
+    if (!allowedSizes.includes(size)) return;
+
+    home.push({
+      title: product.title,
+      category: `For Head & Body | ${v.sizeLabel}`,
+      img: v.img,
+      link: `/mainProduct/${product.slug.current}`,
     });
-  }
+  });
+}
 
-  // FORCE: keep only first 3 (50G, 80G, 200G)
-  home = home.slice(0, 3);
 
   /* ---- SALON SOLUTIONS (unchanged) ---- */
   const salon = allProducts
@@ -134,20 +139,26 @@ export default function ProductRange() {
         {/* ───────────── Animated Product Transition ───────────── */}
         <div className="relative overflow-hidden min-h-[500px]">
           <div
-            className={clsx(
-              "absolute inset-0 transition-opacity duration-500 ease-in-out",
-              activeTab === "home" ? "opacity-100" : "opacity-0"
-            )}
-          >
+  className={clsx(
+    "absolute inset-0 transition-opacity duration-500 ease-in-out",
+    activeTab === "home"
+      ? "opacity-100 pointer-events-auto"
+      : "opacity-0 pointer-events-none"
+  )}
+>
+
             <ProductGrid products={products.home} />
           </div>
 
           <div
-            className={clsx(
-              "absolute inset-0 transition-opacity duration-500 ease-in-out",
-              activeTab === "salon" ? "opacity-100" : "opacity-0"
-            )}
-          >
+  className={clsx(
+    "absolute inset-0 transition-opacity duration-500 ease-in-out",
+    activeTab === "salon"
+      ? "opacity-100 pointer-events-auto"
+      : "opacity-0 pointer-events-none"
+  )}
+>
+
             <ProductGrid products={products.salon} />
           </div>
         </div>

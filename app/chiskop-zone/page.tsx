@@ -60,7 +60,7 @@ export default async function ChiskopZonePage() {
       {/* ───────────── FAQ SECTION ───────────── */}
       <Section variant="default" className="bg-white text-chiskop-black py-16 md:py-24">
         <Container className="max-w-[1200px] mx-auto px-6 md:px-8">
-          <h2 className="text-[22px] md:text-[26px] font-bold text-chiskop-red mb-6">
+          <h2 className="text-[22px] md:text-[46px] font-extrabold text-chiskop-red mb-2">
             Know Your Chiskop
           </h2>
           <p className="text-[15px] md:text-[16px] text-chiskop-gray mb-8">

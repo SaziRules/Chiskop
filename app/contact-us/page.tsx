@@ -35,11 +35,8 @@ export default async function ContactUsPage() {
       <section className="max-w-[1200px] mx-auto px-6 pt-6 pb-20">
         
                   <h2 className="text-[22px] md:text-[26px] font-bold text-chiskop-red mb-6">
-                    Know Your Chiskop
+                    Where To Buy?
                   </h2>
-                  <p className="text-[15px] md:text-[16px] text-chiskop-gray mb-8">
-                    Frequently Asked Questions
-                  </p>
         <FaqAccordion 
           title={faq?.title ?? ""}
           faqs={faq?.faqs ?? []}

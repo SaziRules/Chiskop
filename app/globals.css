@@ -150,4 +150,15 @@ p {
   @apply w-full border border-gray-300 rounded-md px-4 py-3 text-[15px] focus:outline-none focus:border-chiskop-red;
 }
 
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+
+
 
