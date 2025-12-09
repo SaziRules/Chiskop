@@ -19,7 +19,7 @@ export default function FaqAccordion({
         <div key={i} className="border-b border-gray-300 pb-3">
           <button
             onClick={() => setOpen(open === i ? null : i)}
-            className="w-full flex items-center justify-between text-[17px] font-semibold py-3"
+            className="w-full flex items-center justify-between text-[17px] text-left font-semibold py-3"
           >
             {item.question}
             <span className="text-xl">{open === i ? "-" : "+"}</span>

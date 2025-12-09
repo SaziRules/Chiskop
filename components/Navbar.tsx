@@ -46,7 +46,7 @@ export default function Navbar() {
           {/* ───────────── Logo (Overlaps Down) ───────────── */}
           <Link
             href="/"
-            className="absolute left-[18px] bottom-[-34px] z-20"
+            className="absolute left-[18px] -bottom-11 z-20"
           >
             <Image
               src="/images/logo.png"

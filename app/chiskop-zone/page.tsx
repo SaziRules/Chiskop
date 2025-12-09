@@ -6,23 +6,52 @@ import JoinCrew from "@/components/sections/JoinCrew";
 import { groq } from "next-sanity";
 import { client } from "@/sanity/lib/client";
 import FaqAccordion from "@/components/contact/FaqAccordion";
+import { getPageHero } from "@/lib/sanity/pageHero";
+import ImageBanner from "@/components/sections/ImageBanner";
 
 export default async function ChiskopZonePage() {
-  // ⭐ FETCH FAQ GROUP for this page
+  // ⭐ Fetch Page Hero
+  const hero = await getPageHero("chiskop-zone");
+
+  // ⭐ Fetch FAQ for this page
   const faq = await client.fetch(
-    groq`*[_type == "faqGroup" && title == "Chiskop Zone"][0]{
-      title,
-      faqs[]{
-        question,
-        answer
+    groq`
+      *[_type == "faqGroup" && title == "Chiskop Zone"][0]{
+        title,
+        faqs[] {
+          question,
+          answer
+        }
       }
-    }`
+    `
+  );
+
+  // ⭐ Fetch ALL promo banners for this page 
+  const promoBanners = await client.fetch(
+    groq`
+      *[_type == "promoBanner" && page == "chiskop-zone"]{
+        "desktopImage": desktopImage.asset->url,
+        "mobileImage": mobileImage.asset->url,
+        alt
+      }
+    `
   );
 
   return (
     <main className="bg-white text-chiskop-black">
-      {/* ───────────── HERO BANNER ───────────── */}
-      <GlobalBanner title="Chiskop Zone" height="h-[400px] md:h-[500px]" />
+
+      {/* ───────────── PAGE HERO ───────────── */}
+      {hero && (
+        <GlobalBanner
+          desktopImage={hero.desktopImage}
+          mobileImage={hero.mobileImage}
+          heading={hero.heading}
+          headline={hero.headline}
+          subtext={hero.subtext}
+          alt={hero.alt}
+          height="h-[420px] md:h-[500px]"
+        />
+      )}
 
       {/* ───────────── INTRO TEXT ───────────── */}
       <Section variant="default" className="py-16 md:py-20 text-center">
@@ -36,8 +65,8 @@ export default async function ChiskopZonePage() {
         </Container>
       </Section>
 
-      {/* ───────────── BANNER ───────────── */}
-      <GlobalBanner title="BANNER IMAGE - TUTORIAL / STEP BY STEP GUIDE" height="md:h-[500px]" />
+      {/* ───────────── TOP PROMO BANNERS (if any) ───────────── */}
+      {promoBanners[1] && <ImageBanner data={promoBanners[1]} />}
 
       {/* ───────────── TOP TIPS SECTION ───────────── */}
       <TopTips />
@@ -45,17 +74,17 @@ export default async function ChiskopZonePage() {
       {/* ───────────── WIN WITH CHISKOP ───────────── */}
       <Section variant="default" className="py-20 text-center">
         <Container className="max-w-[800px] mx-auto px-6 md:px-8">
-          <h2 className="text-[26px] md:text-[52px] font-extrabold italic text-chiskop-red uppercase mb-3">
+          <h2 className="text-[27px] md:text-[52px] font-extrabold italic text-chiskop-red uppercase mb-3">
             WIN WITH CHISKOP
           </h2>
-          <p className="text-[16px] md:text-[30px] text-chiskop-black leading-9">
+          <p className="text-[16px] md:text-[30px] text-chiskop-black leading-tight">
             Keep your eye on this space for Chiskop giveaways, challenges, and competitions.
           </p>
         </Container>
       </Section>
 
-      {/* ───────────── BANNER ───────────── */}
-      <GlobalBanner title="BANNER IMAGE" height="md:h-[500px]" />
+      {/* ───────────── SECOND BATCH OF BANNERS (optional re-render) ───────────── */}
+      {promoBanners[0] && <ImageBanner data={promoBanners[0]} />}
 
       {/* ───────────── FAQ SECTION ───────────── */}
       <Section variant="default" className="bg-white text-chiskop-black py-16 md:py-24">
@@ -74,8 +103,9 @@ export default async function ChiskopZonePage() {
         </Container>
       </Section>
 
-      {/* ───────────── JOIN THE CREW ───────────── */}
+      {/* ───────────── JOIN CREW ───────────── */}
       <JoinCrew />
+
     </main>
   );
 }

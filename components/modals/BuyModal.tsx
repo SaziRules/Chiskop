@@ -89,7 +89,8 @@ export default function BuyModal({
 
   /* ───────────── MODAL UI (EXACT ORIGINAL LAYOUT) ───────────── */
   const ModalUI = (
-    <div className="fixed inset-0 z-10000 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-10000 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+
       <div className="bg-white rounded-[10px] shadow-xl max-w-[420px] w-full p-6 relative text-chiskop-black overflow-y-auto max-h-[90vh]">
 
         {/* Close */}

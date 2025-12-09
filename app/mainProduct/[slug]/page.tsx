@@ -120,7 +120,8 @@ export default function ProductPage(props: any) {
         ingredients={product.ingredientsText ?? []}
       />
 
-      <ProductReviewsSection />
+      <ProductReviewsSection productSlug={slug} />
+
 
       <JoinCrew />
     </main>

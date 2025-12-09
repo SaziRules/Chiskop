@@ -36,10 +36,10 @@ Start with the Hair Removal Cream for a smooth chiskop, then finish with the Soo
           {/* ───────────── Text column ───────────── */}
           <div className="py-12 md:py-20 flex items-center">
             <div className="max-w-[480px] space-y-4 md:space-y-5">
-              <h2 className="uppercase font-extrabold leading-tight text-chiskop-red text-[20px] sm:text-[21px] md:text-[33px]">
+              <h2 className="uppercase font-extrabold leading-tight text-chiskop-red text-[20px] text-center sm:text-left sm:text-[21px] md:text-[33px]">
                 {title}
               </h2>
-              <p className="text-[15px] sm:text-[16px] md:text-[19px] leading-relaxed text-chiskop-black">
+              <p className="text-[15px] sm:text-[16px] md:text-[19px] leading-relaxed text-chiskop-black text-center sm:text-left">
                 {description}
               </p>
             </div>

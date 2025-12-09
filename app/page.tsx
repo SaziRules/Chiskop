@@ -9,8 +9,8 @@ import BrandInfo from "@/components/sections/BrandInfo";
 import JoinCrew from "@/components/sections/JoinCrew";
 
 export default async function Home() {
-  // ⭐ Fetch Retailer Strip + Promo Banner
-  const { retailerStrip, promoBanner } = await client.fetch(
+
+  const { retailerStrip, promoBanners } = await client.fetch(
     groq`
       {
         "retailerStrip": *[_type == "retailerStrip"][0]{
@@ -21,12 +21,10 @@ export default async function Home() {
           }
         },
 
-        "promoBanner": *[_type == "promoBanner"][0]{
-          bannerImage {
-            asset->{
-              url
-            }
-          },
+        // ⭐ Fetch ALL banners for the HOME page
+        "promoBanners": *[_type == "promoBanner" && page == "home"]{
+          "desktopImage": desktopImage.asset->url,
+          "mobileImage": mobileImage.asset->url,
           alt
         }
       }
@@ -38,13 +36,20 @@ export default async function Home() {
       <Hero />
       <ProductRange />
 
-      {/* ⭐ Homepage Banner (CMS) */}
-      <ImageBanner data={promoBanner} />
+      {/* ⭐ Render first banner */}
+      {promoBanners[0] && <ImageBanner data={promoBanners[0]} />}
 
-      {/* ⭐ Retailer Strip (CMS) */}
+      {/* ⭐ Retailer Strip */}
       <RetailersStrip retailers={retailerStrip?.retailers ?? []} />
 
+      {/* ⭐ Render second banner */}
+      {promoBanners[1] && <ImageBanner data={promoBanners[1]} />}
+
       <BrandInfo />
+
+      {/* ⭐ Render third banner */}
+      {promoBanners[2] && <ImageBanner data={promoBanners[2]} />}
+
       <JoinCrew />
     </>
   );

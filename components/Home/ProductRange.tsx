@@ -15,6 +15,7 @@ interface ProductItem {
   title: string;
   img: string;
   link: string;
+  slug: string; // ⭐ ADDED
 }
 
 /* ───────────── FETCH FROM SANITY ───────────── */
@@ -35,30 +36,27 @@ async function fetchProductRange(): Promise<{ home: ProductItem[]; salon: Produc
   const allProducts = await client.fetch(query);
 
   /* ---- HOME SOLUTIONS (only show 80g, 200g, 50g) ---- */
-const homeProductsRaw = allProducts.filter((p: any) => p.category === "home");
+  const homeProductsRaw = allProducts.filter((p: any) => p.category === "home");
 
-let home: ProductItem[] = [];
+  let home: ProductItem[] = [];
 
-for (const product of homeProductsRaw) {
-  product.variants.forEach((v: any) => {
-    if (!v?.sizeLabel) return;
+  for (const product of homeProductsRaw) {
+    product.variants.forEach((v: any) => {
+      if (!v?.sizeLabel) return;
 
-    const size = v.sizeLabel.trim().toLowerCase();
+      const size = v.sizeLabel.trim().toLowerCase();
+      const allowedSizes = ["80g", "200g", "50g"];
+      if (!allowedSizes.includes(size)) return;
 
-    // Only allow these exact 3:
-    const allowedSizes = ["80g", "200g", "50g"];
-
-    if (!allowedSizes.includes(size)) return;
-
-    home.push({
-      title: product.title,
-      category: `For Head & Body | ${v.sizeLabel}`,
-      img: v.img,
-      link: `/mainProduct/${product.slug.current}`,
+      home.push({
+        title: product.title,
+        category: `For Head & Body | ${v.sizeLabel}`,
+        img: v.img,
+        link: `/mainProduct/${product.slug.current}`,
+        slug: product.slug.current, // ⭐ ADDED
+      });
     });
-  });
-}
-
+  }
 
   /* ---- SALON SOLUTIONS (unchanged) ---- */
   const salon = allProducts
@@ -68,11 +66,41 @@ for (const product of homeProductsRaw) {
       category: `For Head & Body | ${p.variants[0].sizeLabel}`,
       img: p.variants[0].img,
       link: `/mainProduct/${p.slug.current}`,
+      slug: p.slug.current, // ⭐ ADDED
     }));
 
   return { home, salon };
 }
 
+/* ───────────── FETCH RATINGS USING EXISTING API ───────────── */
+async function getRatings(slugs: string[]) {
+  const results: Record<string, { avg: number; count: number }> = {};
+
+  await Promise.all(
+    slugs.map(async (slug) => {
+      try {
+        const res = await fetch(`/api/reviews/${slug}`, { cache: "no-store" });
+        const reviews = await res.json();
+
+        if (Array.isArray(reviews) && reviews.length > 0) {
+          const total = reviews.reduce((s, r) => s + (r.rating || 0), 0);
+          const avg = total / reviews.length;
+
+          results[slug] = {
+            avg: Number(avg.toFixed(1)),
+            count: reviews.length,
+          };
+        } else {
+          results[slug] = { avg: 0, count: 0 };
+        }
+      } catch {
+        results[slug] = { avg: 0, count: 0 };
+      }
+    })
+  );
+
+  return results;
+}
 
 /* ───────────── MAIN COMPONENT ───────────── */
 export default function ProductRange() {
@@ -83,16 +111,25 @@ export default function ProductRange() {
     salon: [],
   });
 
+  const [ratings, setRatings] = useState<Record<string, { avg: number; count: number }>>({});
+
   /* Fetch real data (NO BREAKING CHANGES) */
   useEffect(() => {
     async function load() {
       const res = await fetchProductRange();
       setProducts(res);
+
+      // ⭐ Collect slugs
+      const slugs = Array.from(new Set([...res.home, ...res.salon].map((p) => p.slug)));
+
+      // ⭐ Fetch ratings
+      const ratingData = await getRatings(slugs);
+      setRatings(ratingData);
     }
     load();
   }, []);
 
-  const tabs: { id: TabKey; label: string }[] = [
+  const tabs = [
     { id: "home", label: "Home Solutions" },
     { id: "salon", label: "Salon Solutions" },
   ];
@@ -115,7 +152,7 @@ export default function ProductRange() {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => setActiveTab(tab.id as TabKey)}
                 className={clsx(
                   "relative pb-4 text-[15px] md:text-[16px] font-bold uppercase tracking-wide transition-colors cursor-pointer",
                   activeTab === tab.id
@@ -139,27 +176,25 @@ export default function ProductRange() {
         {/* ───────────── Animated Product Transition ───────────── */}
         <div className="relative overflow-hidden min-h-[500px]">
           <div
-  className={clsx(
-    "absolute inset-0 transition-opacity duration-500 ease-in-out",
-    activeTab === "home"
-      ? "opacity-100 pointer-events-auto"
-      : "opacity-0 pointer-events-none"
-  )}
->
-
-            <ProductGrid products={products.home} />
+            className={clsx(
+              "absolute inset-0 transition-opacity duration-500 ease-in-out",
+              activeTab === "home"
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            )}
+          >
+            <ProductGrid products={products.home} ratings={ratings} />
           </div>
 
           <div
-  className={clsx(
-    "absolute inset-0 transition-opacity duration-500 ease-in-out",
-    activeTab === "salon"
-      ? "opacity-100 pointer-events-auto"
-      : "opacity-0 pointer-events-none"
-  )}
->
-
-            <ProductGrid products={products.salon} />
+            className={clsx(
+              "absolute inset-0 transition-opacity duration-500 ease-in-out",
+              activeTab === "salon"
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 pointer-events-none"
+            )}
+          >
+            <ProductGrid products={products.salon} ratings={ratings} />
           </div>
         </div>
       </Container>
@@ -168,13 +203,13 @@ export default function ProductRange() {
 }
 
 /* ───────────── Grid & Mobile Swipe Component ───────────── */
-function ProductGrid({ products }: { products: ProductItem[] }) {
+function ProductGrid({ products, ratings }: { products: ProductItem[]; ratings: any }) {
   return (
     <>
       {/* Desktop Grid */}
       <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:gap-12 justify-items-center">
         {products.map((p, i) => (
-          <ProductCard key={i} {...p} />
+          <ProductCard key={i} {...p} rating={ratings[p.slug]} />
         ))}
       </div>
 
@@ -182,7 +217,7 @@ function ProductGrid({ products }: { products: ProductItem[] }) {
       <div className="md:hidden overflow-x-auto flex gap-5 snap-x snap-mandatory scroll-smooth px-1 pb-5">
         {products.map((p, i) => (
           <div key={i} className="snap-start shrink-0 w-[82%]">
-            <ProductCard {...p} />
+            <ProductCard {...p} rating={ratings[p.slug]} />
           </div>
         ))}
       </div>
@@ -191,18 +226,22 @@ function ProductGrid({ products }: { products: ProductItem[] }) {
 }
 
 /* ───────────── Individual Product Card ───────────── */
-function ProductCard({ category, title, img, link }: ProductItem) {
+function ProductCard({
+  category,
+  title,
+  img,
+  link,
+  rating,
+}: ProductItem & { rating?: { avg: number; count: number } }) {
+  const r = rating || { avg: 0, count: 0 };
+  const filled = "★".repeat(Math.round(r.avg));
+  const empty = "☆".repeat(5 - Math.round(r.avg));
+
   return (
     <div className="bg-white overflow-hidden flex flex-col items-center relative w-full max-w-[350px] transition-all duration-300">
       <Link href={link} className="w-full">
         <div className="bg-chiskop-offWhite flex items-center justify-center h-[340px] md:h-[400px] p-8">
-          <Image
-            src={img}
-            alt={title}
-            width={260}
-            height={260}
-            className="object-contain"
-          />
+          <Image src={img} alt={title} width={260} height={260} className="object-contain" />
         </div>
       </Link>
 
@@ -212,14 +251,15 @@ function ProductCard({ category, title, img, link }: ProductItem) {
         </p>
 
         <Link href={link}>
-          <h3 className="text-[17px] font-semibold text-chiskop-black leading-snug mb-3 hover:text-chiskop-red transition-colors">
+          <h3 className="text-[17px] capitalize font-semibold text-chiskop-black leading-snug mb-3 hover:text-chiskop-red transition-colors">
             {title}
           </h3>
         </Link>
 
+        {/* ⭐ Dynamic Ratings */}
         <div className="flex justify-center md:justify-start items-center gap-0.5 text-chiskop-lightGray text-[13px]">
-          <span>★★★★★</span>
-          <span className="ml-1 text-[12px]">(0)</span>
+          <span>{filled}{empty}</span>
+          <span className="ml-1 text-[12px]">({r.count})</span>
         </div>
       </div>
     </div>

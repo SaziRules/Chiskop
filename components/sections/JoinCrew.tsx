@@ -22,7 +22,7 @@ export default function JoinCrew() {
         </div>
 
         {/* ───────────── Form Section ───────────── */}
-        <div className="w-full md:w-[48%] flex flex-col items-center md:items-end text-center md:text-right">
+        <div className="w-full md:w-[48%] flex flex-col items-center md:items-end text-left md:text-right">
           {/* Heading */}
           <h2 className="uppercase text-chiskop-red font-extrabold text-[26px] md:text-[46px] leading-[1.05] mb-2 tracking-tight md:ml-auto max-w-none">
             Join the Chiskop Crew

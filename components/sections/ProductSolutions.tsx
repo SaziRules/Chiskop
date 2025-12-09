@@ -15,6 +15,7 @@ interface ProductItem {
   img: string;
   link: string;
   size: string;
+  slug: string;
 }
 
 /* ───────────── FETCH ALL PRODUCTS + FLATTEN VARIANTS ───────────── */
@@ -46,7 +47,7 @@ async function fetchProductSolutions(): Promise<{
   // Flatten variants and EXCLUDE 950G
   const home: ProductItem[] = homeProductsRaw.flatMap((product: any) =>
     product.variants
-      ?.filter((v: any) => v.sizeLabel !== "950G") // ← EXCLUDE 950G ONLY HERE
+      ?.filter((v: any) => v.sizeLabel !== "950G")
       .map((v: any) => ({
         id: product._id,
         title: product.title,
@@ -54,6 +55,7 @@ async function fetchProductSolutions(): Promise<{
         img: v.img,
         size: v.sizeLabel,
         link: `/mainProduct/${product.slug.current}`,
+        slug: product.slug.current,
       }))
   );
 
@@ -71,15 +73,46 @@ async function fetchProductSolutions(): Promise<{
       img: v.img,
       size: v.sizeLabel,
       link: `/mainProduct/${product.slug.current}`,
-
+      slug: product.slug.current,
     }))
   );
 
   return { home, salon };
 }
 
+/* ───────────── FETCH RATINGS FOR SLUGS ───────────── */
+async function getRatingsForSlugs(slugs: string[]) {
+  const results: Record<string, { avg: number; count: number }> = {};
+
+  await Promise.all(
+    slugs.map(async (slug) => {
+      try {
+        const res = await fetch(`/api/reviews/${slug}`, { cache: "no-store" });
+        const reviews = await res.json();
+
+        if (Array.isArray(reviews) && reviews.length > 0) {
+          const total = reviews.reduce((s, r) => s + (r.rating || 0), 0);
+          const avg = total / reviews.length;
+
+          results[slug] = {
+            avg: Number(avg.toFixed(1)),
+            count: reviews.length,
+          };
+        } else {
+          results[slug] = { avg: 0, count: 0 };
+        }
+      } catch {
+        results[slug] = { avg: 0, count: 0 };
+      }
+    })
+  );
+
+  return results;
+}
+
 /* ───────────── MAIN COMPONENT ───────────── */
 export default function ProductSolutions() {
+  const [ratings, setRatings] = useState<Record<string, { avg: number; count: number }>>({});
   const [home, setHome] = useState<ProductItem[]>([]);
   const [salon, setSalon] = useState<ProductItem[]>([]);
 
@@ -88,7 +121,13 @@ export default function ProductSolutions() {
       const res = await fetchProductSolutions();
       setHome(res.home);
       setSalon(res.salon);
+
+      // Fetch ratings for all product slugs
+      const slugs = Array.from(new Set([...res.home, ...res.salon].map((p) => p.slug)));
+      const ratingData = await getRatingsForSlugs(slugs);
+      setRatings(ratingData);
     }
+
     load();
   }, []);
 
@@ -121,15 +160,24 @@ export default function ProductSolutions() {
                 </p>
 
                 <Link href={p.link}>
-                  <h3 className="text-[17px] font-semibold text-chiskop-black leading-snug mb-3 hover:text-chiskop-red transition-colors">
+                  <h3 className="text-[17px] font-semibold text-chiskop-black capitalize leading-snug mb-3 hover:text-chiskop-red transition-colors">
                     {p.title}
                   </h3>
                 </Link>
 
-                <div className="flex justify-center md:justify-start items-center gap-0.5 text-chiskop-lightGray text-[13px]">
-                  <span>★★★★★</span>
-                  <span className="ml-1 text-[12px]">(0)</span>
-                </div>
+                {/* ⭐ Dynamic Ratings */}
+                {(() => {
+                  const r = ratings[p.slug] || { avg: 0, count: 0 };
+                  const filled = "★".repeat(Math.round(r.avg));
+                  const empty = "☆".repeat(5 - Math.round(r.avg));
+
+                  return (
+                    <div className="flex justify-center md:justify-start items-center gap-0.5 text-chiskop-lightGray text-[13px]">
+                      <span>{filled}{empty}</span>
+                      <span className="ml-1 text-[12px]">({r.count})</span>
+                    </div>
+                  );
+                })()}
               </div>
             </div>
           ))}
@@ -160,15 +208,24 @@ export default function ProductSolutions() {
                 </p>
 
                 <Link href={p.link}>
-                  <h3 className="text-[17px] font-semibold text-chiskop-black leading-snug mb-3 hover:text-chiskop-red transition-colors">
+                  <h3 className="text-[17px] font-semibold capitalize text-chiskop-black leading-snug mb-3 hover:text-chiskop-red transition-colors">
                     {p.title}
                   </h3>
                 </Link>
 
-                <div className="flex justify-center md:justify-start items-center gap-0.5 text-chiskop-lightGray text-[13px]">
-                  <span>★★★★★</span>
-                  <span className="ml-1 text-[12px]">(0)</span>
-                </div>
+                {/* ⭐ Dynamic Ratings */}
+                {(() => {
+                  const r = ratings[p.slug] || { avg: 0, count: 0 };
+                  const filled = "★".repeat(Math.round(r.avg));
+                  const empty = "☆".repeat(5 - Math.round(r.avg));
+
+                  return (
+                    <div className="flex justify-center md:justify-start items-center gap-0.5 text-chiskop-lightGray text-[13px]">
+                      <span>{filled}{empty}</span>
+                      <span className="ml-1 text-[12px]">({r.count})</span>
+                    </div>
+                  );
+                })()}
               </div>
             </div>
           ))}
