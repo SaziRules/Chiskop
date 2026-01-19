@@ -10,8 +10,8 @@ export default function BrandInfo() {
       <Container className="max-w-[800px] mx-auto px-6">
         {/* Bold Red Tagline */}
         <h2 className="text-chiskop-red font-extrabold italic uppercase text-[34px] md:text-[52px] leading-[1.15] tracking-tight mb-6">
-          Ukhanda lihle, <br className="hidden md:block" />
-          uy’chiskop.
+          Zithembe, Ube' Nesbindi, <br className="hidden md:block" />
+          Njenge Chiskop.
         </h2>
 
         {/* Body Copy */}

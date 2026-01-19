@@ -3,6 +3,7 @@
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
+
 export default function Footer() {
   const pathname = usePathname();
 
@@ -19,20 +20,20 @@ export default function Footer() {
           <div>
             <h3 className="font-extrabold text-[17px] md:text-[18px] mb-2">MENU</h3>
             <ul className="space-y-1 text-[15px] md:text-[16px] leading-tight">
-              <li className="hover:text-chiskop-red cursor-pointer">HOME</li>
-              <li className="hover:text-chiskop-red cursor-pointer">PRODUCTS</li>
-              <li className="hover:text-chiskop-red cursor-pointer">CHISKOP ZONE</li>
-              <li className="hover:text-chiskop-red cursor-pointer">SALON ZONE</li>
+              <li className="hover:text-chiskop-red cursor-pointer"><a href="/">HOME</a></li>
+              <li className="hover:text-chiskop-red cursor-pointer"><a href="/products">PRODUCTS</a></li>
+              <li className="hover:text-chiskop-red cursor-pointer"><a href="/chiskop-zone">CHISKOP ZONE</a></li>
+              <li className="hover:text-chiskop-red cursor-pointer"><a href="/salon">SALON ZONE</a></li>
             </ul>
           </div>
 
           <div>
             <h3 className="font-extrabold text-[17px] md:text-[18px] mb-2">PRODUCTS</h3>
             <ul className="space-y-1 text-[15px] md:text-[16px] leading-tight">
-              <li>HAIR REMOVAL CREAM 80G</li>
-              <li>SOOTHING BALM 50G</li>
-              <li>HAIR REMOVAL CREAM 200G</li>
-              <li>HAIR REMOVAL CREAM 950G</li>
+              <li><a href="/mainProduct/chiskop-hair-removal-cream">HAIR REMOVAL CREAM 80G</a></li>
+              <li><a href="/mainProduct/chiskop-soothing-balm">SOOTHING BALM 50G</a></li>
+              <li><a href="/mainProduct/chiskop-hair-removal-cream">HAIR REMOVAL CREAM 200G</a></li>
+              <li><a href="/mainProduct/chiskop-hair-removal-cream">HAIR REMOVAL CREAM 950G</a></li>
             </ul>
           </div>
         </div>
@@ -41,9 +42,9 @@ export default function Footer() {
         <div className="text-left md:text-left">
           <h3 className="font-extrabold text-[17px] md:text-[18px] mb-2">CUSTOMER CARE</h3>
           <ul className="space-y-1 text-[15px] md:text-[16px] leading-tight">
-            <li className="hover:text-chiskop-red cursor-pointer">CONTACT US</li>
-            <li className="hover:text-chiskop-red cursor-pointer">TERMS & CONDITIONS</li>
-            <li className="hover:text-chiskop-red cursor-pointer">PRIVACY POLICY</li>
+            <li className="hover:text-chiskop-red cursor-pointer"><a href="/contact-us">CONTACT US</a></li>
+            <li className="hover:text-chiskop-red cursor-pointer"><a href="/terms">TERMS & CONDITIONS</a></li>
+            <li className="hover:text-chiskop-red cursor-pointer"><a href="/privacy">PRIVACY POLICY</a></li>
           </ul>
         </div>
 

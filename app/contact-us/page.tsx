@@ -35,7 +35,7 @@ export default async function ContactUsPage() {
       <section className="max-w-[1200px] mx-auto px-6 pt-6 pb-20">
         
                   <h2 className="text-[22px] md:text-[26px] font-bold text-chiskop-red mb-6">
-                    Where To Buy?
+                    Frequently Asked Questions?
                   </h2>
         <FaqAccordion 
           title={faq?.title ?? ""}

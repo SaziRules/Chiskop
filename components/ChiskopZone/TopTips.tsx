@@ -14,12 +14,12 @@ export default function TopTips() {
     {
       title: "Use the Soothing Balm After",
       description:
-        "Apply right after using the hair removal cream to cool, calm, and protect your skin. Did you know? It also works as an aftershave.",
+        "Apply right after using the Hair Removal Cream to cool, calm, and protect your skin. Did you know? It also works as an aftershave.",
     },
     {
       title: "Hair Length Matters",
       description:
-        "For best results, hair should not be too long before applying — around 1–2mm is ideal. Shorter hair makes removal faster, smoother, and more even.",
+        "For best results, hair should not be too long before applying - around 1-2mm is ideal. Shorter hair makes removal faster, smoother, and more even.",
     },
   ];
 

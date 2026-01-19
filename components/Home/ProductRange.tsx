@@ -130,7 +130,7 @@ export default function ProductRange() {
   }, []);
 
   const tabs = [
-    { id: "home", label: "Home Solutions" },
+    { id: "home", label: "At-Home Solutions" },
     { id: "salon", label: "Salon Solutions" },
   ];
 

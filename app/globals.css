@@ -159,6 +159,11 @@ p {
   animation: marquee 25s linear infinite;
 }
 
+.input {
+  @apply border border-gray-300 px-3 py-2 text-sm w-full focus:outline-none focus:border-black;
+}
+
+
 
 
 

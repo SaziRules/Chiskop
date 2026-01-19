@@ -22,22 +22,22 @@ export default function SalonProfessionalSection() {
             <ul className="space-y-5 text-[15px] md:text-[16px] text-chiskop-gray leading-relaxed">
               <li>
                 <span className="text-chiskop-red text-[18px] mr-2">✔</span>
-                <strong>Hygienic and safer alternative</strong> – reduces the risk
+                <strong>Hygienic and safer alternative</strong> - reduces the risk
                 of cuts, infections, and razor irritation.
               </li>
               <li>
                 <span className="text-chiskop-red text-[18px] mr-2">✔</span>
-                <strong>Ideal for a smooth finish</strong> – perfect for clients
+                <strong>Ideal for a smooth finish</strong> - perfect for clients
                 who struggle with razor bumps and ingrown hairs.
               </li>
               <li>
                 <span className="text-chiskop-red text-[18px] mr-2">✔</span>
-                <strong>Consistent, even results</strong> – no patchy spots or
+                <strong>Consistent, even results</strong> - no patchy spots or
                 uneven shaving when applied according to instructions.
               </li>
               <li>
                 <span className="text-chiskop-red text-[18px] mr-2">✔</span>
-                <strong>Convenient for professionals</strong> – easy to apply,
+                <strong>Convenient for professionals</strong> - easy to apply,
                 quick to work, and simple to wipe off, allowing barbers to serve
                 more clients efficiently.
               </li>
@@ -73,7 +73,7 @@ export default function SalonProfessionalSection() {
             950g pack.
           </p>
           <Link
-            href="/contact"
+            href="/contact-us"
             className="inline-block bg-chiskop-red text-white text-[15px] font-bold px-8 py-2.5 rounded-md hover:bg-[#7c1217] transition-colors"
           >
             Contact Us
