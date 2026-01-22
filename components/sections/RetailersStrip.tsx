@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function RetailerStrip({ retailers }: { retailers: any[] }) {
   return (
-    <Section variant="default" className="py-12 bg-white border-t border-[#f0f0f0]">
+    <Section variant="default" className="py-12 bg-white ">
       <Container className="max-w-[1600px] overflow-hidden overflow-y-hidden!important">
 
         <Marquee

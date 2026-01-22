@@ -33,5 +33,12 @@ export default defineType({
       title: "Alt Text",
       type: "string",
     }),
+
+    defineField({
+      name: "externalLink",
+      title: "External Link",
+      type: "url",
+      description: "Optional external link for this promo banner.",
+    }),
   ],
 });

@@ -72,19 +72,47 @@ export default function Footer() {
 
           {/* Social icons exactly as screenshot */}
           <div className="flex items-center md:justify-end justify-center gap-4 mt-4">
-            <IconCircle>
-              <FaFacebookF className="text-white text-[14px]" />
-            </IconCircle>
-            <IconCircle>
-              <FaInstagram className="text-white text-[14px]" />
-            </IconCircle>
-            <IconCircle>
-              <FaTiktok className="text-white text-[14px]" />
-            </IconCircle>
-            <IconCircle>
-              <FaYoutube className="text-white text-[14px]" />
-            </IconCircle>
-          </div>
+  <IconCircle>
+    <a
+      href="https://web.facebook.com/chiskopformen"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaFacebookF className="text-white text-[14px]" />
+    </a>
+  </IconCircle>
+
+  <IconCircle>
+    <a
+      href="https://www.instagram.com/chiskopformen"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaInstagram className="text-white text-[14px]" />
+    </a>
+  </IconCircle>
+
+  <IconCircle>
+    <a
+      href="https://www.tiktok.com/@chiskopformen"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaTiktok className="text-white text-[14px]" />
+    </a>
+  </IconCircle>
+
+  <IconCircle>
+    <a
+      href="https://www.youtube.com/channel/UCaLxnEVbeq_b-x2TyaPFBRw"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <FaYoutube className="text-white text-[14px]" />
+    </a>
+  </IconCircle>
+</div>
+
         </div>
       </div>
 

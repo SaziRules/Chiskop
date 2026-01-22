@@ -61,6 +61,13 @@ export default defineType({
     }),
 
     defineField({
+      name: "externalLink",
+      title: "External Link",
+      type: "url",
+      description: "Optional external link related to this competition.",
+    }),
+
+    defineField({
       name: "startDate",
       title: "Competition Start Date",
       type: "datetime",

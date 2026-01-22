@@ -4,8 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube, FaEnvelope } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube, FaEnvelope, FaTwitter } from "react-icons/fa";
 import NewsletterModal from "@/components/NewsletterModal";
+import { FaX } from "react-icons/fa6";
 
 
 
@@ -49,26 +50,43 @@ export default function Navbar() {
 <div className="h-11 w-full bg-chiskop-gray text-white text-xs">
   <div className="max-w-[1700px] mx-auto h-full px-3 md:px-5 flex items-center justify-between">
 
-    {/* Left: Social Icons */}
-    <div className="flex items-center gap-2">
-      <TopIcon>
-        <FaFacebookF className="text-white text-[12px]" />
-      </TopIcon>
-      <TopIcon>
-        <FaInstagram className="text-white text-[12px]" />
-      </TopIcon>
-      <TopIcon>
-        <FaTiktok className="text-white text-[12px]" />
-      </TopIcon>
-      <TopIcon>
-        <FaYoutube className="text-white text-[12px]" />
-      </TopIcon>
-    </div>
+  {/* Left: Social Icons + Text */}
+<div className="flex items-center gap-3">
+  <TopIcon>
+    <a href="https://web.facebook.com/chiskopformen" target="_blank" rel="noopener noreferrer">
+      <FaFacebookF className="text-white text-[12px]" />
+    </a>
+  </TopIcon>
 
-    {/* Center: Announcement */}
-    <div className="hidden md:block text-center font-medium tracking-tight">
-      Try our premium grooming essentials
-    </div>
+  <TopIcon>
+    <a href="https://www.instagram.com/chiskopformen" target="_blank" rel="noopener noreferrer">
+      <FaInstagram className="text-white text-[12px]" />
+    </a>
+  </TopIcon>
+
+  <TopIcon>
+    <a href="https://x.com/chiskopformen" target="_blank" rel="noopener noreferrer">
+      <FaTwitter className="text-white text-[12px]" />
+    </a>
+  </TopIcon>
+
+  <TopIcon>
+    <a href="https://www.tiktok.com/@chiskopformen" target="_blank" rel="noopener noreferrer">
+      <FaTiktok className="text-white text-[12px]" />
+    </a>
+  </TopIcon>
+
+  <TopIcon>
+    <a href="https://www.youtube.com/channel/UCaLxnEVbeq_b-x2TyaPFBRw" target="_blank" rel="noopener noreferrer">
+      <FaYoutube className="text-white text-[12px]" />
+    </a>
+  </TopIcon>
+
+  <span className="hidden md:inline font-medium tracking-tight ml-4">
+    Join the Chiskop crew
+  </span>
+</div>
+
 
     {/* Right: Mailing List + Search */}
     <div className="flex items-center gap-4">

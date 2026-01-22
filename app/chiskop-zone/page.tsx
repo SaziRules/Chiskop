@@ -32,7 +32,8 @@ export default async function ChiskopZonePage() {
       *[_type == "promoBanner" && page == "chiskop-zone"]{
         "desktopImage": desktopImage.asset->url,
         "mobileImage": mobileImage.asset->url,
-        alt
+        alt,
+        externalLink
       }
     `
   );
