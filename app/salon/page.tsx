@@ -8,7 +8,7 @@ export default function SalonPortalPage() {
   return (
     <main className="bg-white text-chiskop-black">
       <SalonBanner
-        bgSrc="/images/SalonBanner.jpg"
+        bgSrc="/images/SaloBanner.jpg"
         heightClass="h-[480px] md:h-[560px]"
       />
       <SalonIntro />

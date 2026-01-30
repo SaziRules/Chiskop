@@ -15,11 +15,6 @@ export default async function ProductsPage() {
         <GlobalBanner
           desktopImage={hero.desktopImage}
           mobileImage={hero.mobileImage}
-          heading={hero.heading}
-          headline={hero.headline}
-          subtext={hero.subtext}
-          alt={hero.alt}
-          height="h-[420px] md:h-[500px]"
         />
       )}
 

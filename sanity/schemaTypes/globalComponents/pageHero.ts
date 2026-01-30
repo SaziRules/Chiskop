@@ -34,26 +34,6 @@ export default {
       validation: (Rule: Rule) => Rule.required(),
     },
 
-    // ───────────── TEXT CONTENT ─────────────
-    {
-      name: "heading",
-      title: "Small Heading",
-      type: "string",
-      description: "Optional smaller heading above the main headline.",
-    },
-    {
-      name: "headline",
-      title: "Main Headline",
-      type: "string",
-      description: "Large bold page title.",
-    },
-    {
-      name: "subtext",
-      title: "Sub-text",
-      type: "string",
-      description: "Supportive text under the headline.",
-    },
-
     // ───────────── ALT TEXT ─────────────
     {
       name: "alt",

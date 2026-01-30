@@ -7,6 +7,8 @@ import Container from "@/components/Container";
 import Link from "next/link";
 import BuyModal from "../modals/BuyModal";
 import { client } from "@/sanity/lib/client";
+import ImageBanner from "./ImageBanner";
+import { groq } from "next-sanity";
 
 interface ProductItem {
   id: string;
@@ -22,6 +24,7 @@ interface ProductItem {
 async function fetchProductSolutions(): Promise<{
   home: ProductItem[];
   salon: ProductItem[];
+  promoBanners: any[];
 }> {
   const query = `
     *[_type == "product"]{
@@ -37,6 +40,27 @@ async function fetchProductSolutions(): Promise<{
   `;
 
   const allProducts = await client.fetch(query);
+
+  const { promoBanners } = await client.fetch(
+    groq`
+      { 
+        "retailerStrip": *[_type == "retailerStrip"][3]{
+          retailers[] {
+            name,
+            "logo": logo.asset->url,
+            url
+          }
+        },
+
+        // ⭐ Fetch ALL banners for the PRODUCTS page
+        "promoBanners": *[_type == "promoBanner" && page == "products"]{
+          "desktopImage": desktopImage.asset->url,
+          "mobileImage": mobileImage.asset->url,
+          alt
+        }
+      }
+    `
+  );
 
   /* ===================================================================================
      HOME: SHOW ALL HOME PRODUCTS EXCEPT 950G
@@ -77,7 +101,7 @@ async function fetchProductSolutions(): Promise<{
     }))
   );
 
-  return { home, salon };
+  return { home, salon, promoBanners };
 }
 
 /* ───────────── FETCH RATINGS FOR SLUGS ───────────── */
@@ -115,12 +139,14 @@ export default function ProductSolutions() {
   const [ratings, setRatings] = useState<Record<string, { avg: number; count: number }>>({});
   const [home, setHome] = useState<ProductItem[]>([]);
   const [salon, setSalon] = useState<ProductItem[]>([]);
+  const [promoBanners, setPromoBanners] = useState<any[]>([]);
 
   useEffect(() => {
     async function load() {
       const res = await fetchProductSolutions();
       setHome(res.home);
       setSalon(res.salon);
+      setPromoBanners(res.promoBanners);
 
       // Fetch ratings for all product slugs
       const slugs = Array.from(new Set([...res.home, ...res.salon].map((p) => p.slug)));
@@ -182,6 +208,12 @@ export default function ProductSolutions() {
             </div>
           ))}
         </div>
+
+      </Container>
+
+      {promoBanners[0] && <ImageBanner data={promoBanners[0]} />}
+
+      <Container className="max-w-[1200px] mx-auto px-6">
 
         {/* ───────────── SALON SOLUTIONS (UNCHANGED) ───────────── */}
         <h2 className="text-center mt-14 md:text-left text-chiskop-gray text-[20px] md:text-[28px] mb-10">
