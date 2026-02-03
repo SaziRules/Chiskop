@@ -6,19 +6,15 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube, FaEnvelope, FaTwitter } from "react-icons/fa";
 import NewsletterModal from "@/components/NewsletterModal";
-import { FaX } from "react-icons/fa6";
-
-
+import PredictiveSearch from "@/components/search/PredictiveSearch";
 
 export default function Navbar() {
   const pathname = usePathname();
-   // DO NOT RENDER NAVBAR ON SANITY STUDIO ROUTES
+  // DO NOT RENDER NAVBAR ON SANITY STUDIO ROUTES
   if (pathname?.startsWith("/studio")) return null;
+  
   const [open, setOpen] = useState(false);
   const [newsletterOpen, setNewsletterOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
-
 
   const links = [
     { name: "HOME", href: "/" },
@@ -29,13 +25,12 @@ export default function Navbar() {
   ];
 
   const isActive = (href: string) => {
-  if (href === "/") return pathname === "/";
-  if (href === "/products") {
-    return pathname?.startsWith("/products") || pathname?.startsWith("/product");
-  }
-  return pathname?.startsWith(href);
-};
-
+    if (href === "/") return pathname === "/";
+    if (href === "/products") {
+      return pathname?.startsWith("/products") || pathname?.startsWith("/product");
+    }
+    return pathname?.startsWith(href);
+  };
 
   // Close drawer with Escape key
   useEffect(() => {
@@ -46,102 +41,67 @@ export default function Navbar() {
 
   return (
     <header className="relative z-50">
-    {/* ───────────── Top Dark Strip ───────────── */}
-<div className="h-11 w-full bg-chiskop-gray text-white text-xs">
-  <div className="max-w-[1700px] mx-auto h-full px-3 md:px-5 flex items-center justify-between">
+      {/* ───────────── Top Dark Strip ───────────── */}
+      <div className="h-11 w-full bg-chiskop-gray text-white text-xs">
+        <div className="max-w-[1700px] mx-auto h-full px-3 md:px-5 flex items-center justify-between">
 
-  {/* Left: Social Icons + Text */}
-<div className="flex items-center gap-3">
-  <TopIcon>
-    <a href="https://web.facebook.com/chiskopformen" target="_blank" rel="noopener noreferrer">
-      <FaFacebookF className="text-white text-[12px]" />
-    </a>
-  </TopIcon>
+          {/* Left: Social Icons + Text */}
+          <div className="flex items-center gap-3">
+            <TopIcon>
+              <a href="https://web.facebook.com/chiskopformen" target="_blank" rel="noopener noreferrer">
+                <FaFacebookF className="text-white text-[12px]" />
+              </a>
+            </TopIcon>
 
-  <TopIcon>
-    <a href="https://www.instagram.com/chiskopformen" target="_blank" rel="noopener noreferrer">
-      <FaInstagram className="text-white text-[12px]" />
-    </a>
-  </TopIcon>
+            <TopIcon>
+              <a href="https://www.instagram.com/chiskopformen" target="_blank" rel="noopener noreferrer">
+                <FaInstagram className="text-white text-[12px]" />
+              </a>
+            </TopIcon>
 
-  <TopIcon>
-    <a href="https://x.com/chiskopformen" target="_blank" rel="noopener noreferrer">
-      <FaTwitter className="text-white text-[12px]" />
-    </a>
-  </TopIcon>
+            <TopIcon>
+              <a href="https://x.com/chiskopformen" target="_blank" rel="noopener noreferrer">
+                <FaTwitter className="text-white text-[12px]" />
+              </a>
+            </TopIcon>
 
-  <TopIcon>
-    <a href="https://www.tiktok.com/@chiskopformen" target="_blank" rel="noopener noreferrer">
-      <FaTiktok className="text-white text-[12px]" />
-    </a>
-  </TopIcon>
+            <TopIcon>
+              <a href="https://www.tiktok.com/@chiskopformen" target="_blank" rel="noopener noreferrer">
+                <FaTiktok className="text-white text-[12px]" />
+              </a>
+            </TopIcon>
 
-  <TopIcon>
-    <a href="https://www.youtube.com/channel/UCaLxnEVbeq_b-x2TyaPFBRw" target="_blank" rel="noopener noreferrer">
-      <FaYoutube className="text-white text-[12px]" />
-    </a>
-  </TopIcon>
+            <TopIcon>
+              <a href="https://www.youtube.com/channel/UCaLxnEVbeq_b-x2TyaPFBRw" target="_blank" rel="noopener noreferrer">
+                <FaYoutube className="text-white text-[12px]" />
+              </a>
+            </TopIcon>
 
-  <span className="hidden md:inline font-medium tracking-tight ml-4">
-    Join the Chiskop crew
-  </span>
-</div>
+            <span className="hidden md:inline font-medium tracking-tight ml-4">
+              Join the Chiskop crew
+            </span>
+          </div>
 
+          {/* Right: Mailing List + Search */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setNewsletterOpen(true)}
+              className="hidden md:flex items-center gap-2 font-medium hover:underline"
+            >
+              <span>Join our Mailing List</span>
+              <TopIcon>
+                <FaEnvelope className="text-white text-[12px]" />
+              </TopIcon>
+            </button>
 
-    {/* Right: Mailing List + Search */}
-    <div className="flex items-center gap-4">
-    <button
-  onClick={() => setNewsletterOpen(true)}
-  className="hidden md:flex items-center gap-2 font-medium hover:underline"
->
+            {/* ⭐ Integrated Predictive Search */}
+            <div className="hidden md:block">
+              <PredictiveSearch variant="navbar" />
+            </div>
+          </div>
 
-  <span>Join our Mailing List</span>
-
-  <TopIcon>
-    <FaEnvelope className="text-white text-[12px]" />
-  </TopIcon>
-</button>
-<div className="hidden md:flex items-center">
-  <div className="flex items-center bg-white/10 rounded-full pl-3 pr-1 h-7">
-    <input
-      type="text"
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-      placeholder="Search"
-      className="
-        bg-transparent
-        text-white placeholder-white/70
-        text-xs
-        w-[200px]
-        focus:outline-none
-      "
-    />
-
-    <TopIcon>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="w-3 h-3 text-white"
-      >
-        <circle cx="11" cy="11" r="8" />
-        <line x1="21" y1="21" x2="16.65" y2="16.65" />
-      </svg>
-    </TopIcon>
-  </div>
-</div>
-
-
-    </div>
-
-  </div>
-</div>
-
-
+        </div>
+      </div>
 
       {/* ───────────── Main White Bar ───────────── */}
       <div className="relative w-full bg-white border-b border-[#e5e5e5]">
@@ -201,65 +161,70 @@ export default function Navbar() {
         </div>
       </div>
 
-    {/* ───────────── Mobile Drawer ───────────── */}
-<div
-  className={`fixed inset-0 z-40 bg-black/35 transition-opacity ${
-    open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-  }`}
-  onClick={() => setOpen(false)}
->
-  <div
-    role="dialog"
-    aria-modal="true"
-    className={`absolute right-0 top-0 h-full w-[72%] max-w-[300px] bg-chiskop-offWhite border-l border-[#e6e6e6] shadow-lg transform transition-transform duration-300 ${
-      open ? "translate-x-0" : "translate-x-full"
-    }`}
-    onClick={(e) => e.stopPropagation()}
-  >
-    {/* Close Button */}
-    <button
-      onClick={() => setOpen(false)}
-      className="absolute top-6 right-4 text-[22px] text-chiskop-lightGray"
-      aria-label="Close menu"
-    >
-      ✕
-    </button>
-
-    {/* Nav Links */}
-    <nav className="flex flex-col gap-4 px-6 pt-16 uppercase font-extrabold text-menu tracking-tight text-chiskop-black">
-      {[
-        ...links,
-        { name: "TERMS & CONDITIONS", href: "/terms" },
-        { name: "PRIVACY POLICY", href: "/privacy" },
-      ].map((link) => {
-        const active = isActive(link.href);
-        return (
-          <Link
-            key={link.name}
-            href={link.href}
+      {/* ───────────── Mobile Drawer ───────────── */}
+      <div
+        className={`fixed inset-0 z-40 bg-black/35 transition-opacity ${
+          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setOpen(false)}
+      >
+        <div
+          role="dialog"
+          aria-modal="true"
+          className={`absolute right-0 top-0 h-full w-[72%] max-w-[300px] bg-chiskop-offWhite border-l border-[#e6e6e6] shadow-lg transform transition-transform duration-300 ${
+            open ? "translate-x-0" : "translate-x-full"
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Close Button */}
+          <button
             onClick={() => setOpen(false)}
-            className={`${
-              active
-                ? "text-chiskop-red"
-                : "hover:text-chiskop-red transition-colors"
-            }`}
+            className="absolute top-6 right-4 text-[22px] text-chiskop-lightGray"
+            aria-label="Close menu"
           >
-            {link.name}
-          </Link>
-        );
-      })}
-    </nav>
-  </div>
-</div>
-<NewsletterModal
-  open={newsletterOpen}
-  onClose={() => setNewsletterOpen(false)}
-/>
+            ✕
+          </button>
 
+          {/* ⭐ Mobile Search */}
+          <div className="px-6 pt-12 pb-4">
+            <PredictiveSearch variant="mobile" />
+          </div>
 
+          {/* Nav Links */}
+          <nav className="flex flex-col gap-4 px-6 pt-4 uppercase font-extrabold text-menu tracking-tight text-chiskop-black">
+            {[
+              ...links,
+              { name: "TERMS & CONDITIONS", href: "/terms" },
+              { name: "PRIVACY POLICY", href: "/privacy" },
+            ].map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className={`${
+                    active
+                      ? "text-chiskop-red"
+                      : "hover:text-chiskop-red transition-colors"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+      </div>
+
+      <NewsletterModal
+        open={newsletterOpen}
+        onClose={() => setNewsletterOpen(false)}
+      />
     </header>
   );
 }
+
 function TopIcon({ children }: { children: React.ReactNode }) {
   return (
     <div className="w-6 h-6 rounded-full bg-[#383838] flex items-center justify-center hover:bg-chiskop-red transition-colors duration-300 cursor-pointer">
@@ -267,4 +232,3 @@ function TopIcon({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
-

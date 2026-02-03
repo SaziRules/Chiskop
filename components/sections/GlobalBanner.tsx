@@ -8,15 +8,18 @@ interface GlobalBannerProps {
   heading?: string;
   headline?: string;
   subtext?: string;
+
+  height?: string; // ✅ added
 }
 
 export default function GlobalBanner({
   desktopImage = "",
   mobileImage = "",
   alt = "Banner Image",
+  height = "", // ✅ added
 }: GlobalBannerProps) {
   return (
-    <div className="relative w-full">
+    <div className={`relative w-full ${height}`}>
       {/* Desktop Background */}
       {desktopImage && (
         <Image
