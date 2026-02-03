@@ -55,15 +55,14 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   };
 }
 
-
-export const dynamic = "force-dynamic";       // required for Webpack dynamic params
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 export default function ProductPage(props: any) {
   // Unwrap the params promise (Webpack 16 issue)
   const { slug } = use(props.params) as { slug: string };
 
-  // Fetch product on the server synchronously via React.use()
+  // Fetch product with variant-specific shop options
   const product = use(
     client.fetch(
       groq`
@@ -77,7 +76,17 @@ export default function ProductPage(props: any) {
             sizeLabel,
             "img": variantImage.asset->url,
             variantDescription,
-            variantFeatures
+            variantFeatures,
+            shopOptions{
+              online[]{
+                "logo": logo.asset->url,
+                url
+              },
+              instore[]{
+                "logo": logo.asset->url,
+                url
+              }
+            }
           },
 
           shopOptions{
@@ -110,7 +119,7 @@ export default function ProductPage(props: any) {
 
   return (
     <main className="bg-white text-chiskop-black">
-        <ScrollToTop />
+      <ScrollToTop />
       <Product product={product} />
 
       <ProductHowToBanner />
@@ -121,7 +130,6 @@ export default function ProductPage(props: any) {
       />
 
       <ProductReviewsSection productSlug={slug} />
-
 
       <JoinCrew />
     </main>

@@ -93,6 +93,46 @@ export default defineType({
               type: "array",
               of: [{ type: "string" }],
             }),
+
+            // ───────────── VARIANT-SPECIFIC SHOP OPTIONS ─────────────
+            defineField({
+              name: "shopOptions",
+              title: "Shop Options (for this variant)",
+              type: "object",
+              description: "Store links specific to this size variant",
+              fields: [
+                defineField({
+                  name: "online",
+                  title: "Online Stores",
+                  type: "array",
+                  of: [
+                    {
+                      type: "object",
+                      fields: [
+                        defineField({ name: "name", title: "Store Name", type: "string" }),
+                        defineField({ name: "logo", title: "Store Logo", type: "image", options: { hotspot: true } }),
+                        defineField({ name: "url", title: "Store Link", type: "url" }),
+                      ],
+                    },
+                  ],
+                }),
+                defineField({
+                  name: "instore",
+                  title: "In-Store Retailers",
+                  type: "array",
+                  of: [
+                    {
+                      type: "object",
+                      fields: [
+                        defineField({ name: "name", title: "Store Name", type: "string" }),
+                        defineField({ name: "logo", title: "Store Logo", type: "image", options: { hotspot: true } }),
+                        defineField({ name: "url", title: "Store Link", type: "url" }),
+                      ],
+                    },
+                  ],
+                }),
+              ],
+            }),
           ],
           preview: {
             select: {
@@ -104,11 +144,12 @@ export default defineType({
       ],
     }),
 
-    // ───────────── BUY OPTIONS ─────────────
+    // ───────────── FALLBACK SHOP OPTIONS (OPTIONAL) ─────────────
     defineField({
       name: "shopOptions",
-      title: "Shop Options",
+      title: "Fallback Shop Options",
       type: "object",
+      description: "Default shop options if variant-specific ones are not set",
       fields: [
         defineField({
           name: "online",

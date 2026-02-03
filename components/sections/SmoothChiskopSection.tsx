@@ -9,25 +9,21 @@ interface SmoothChiskopSectionProps {
 export default function SmoothChiskopSection({
   title = "FOR A SMOOTH CHISKOP EVERY TIME",
   description = `The Chiskop range is your complete at-home solution for a clean, smooth finish in just 7 minutes.
-Formulated with Vitamin E and Aloe Vera, it’s designed to care for your skin while removing hair effortlessly.
+Formulated with Vitamin E and Aloe Vera, it's designed to care for your skin while removing hair effortlessly.
 Start with the Hair Removal Cream for a smooth chiskop, then finish with the Soothing Balm to cool, calm, and protect your skin.`,
-  imageUrl,
+  imageUrl = "/images/right-bg.jpg", // ⭐ Default to local image
 }: SmoothChiskopSectionProps) {
   return (
     <section className="relative w-full bg-white">
       {/* ───────────── RIGHT SIDE (desktop only) ───────────── */}
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden md:block w-1/2">
-        {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt="Chiskop visual"
-            fill
-            className="object-cover"
-            sizes="50vw"
-          />
-        ) : (
-          <div className="w-full h-full bg-linear-to-r from-chiskop-black to-chiskop-offWhite" />
-        )}
+        <Image
+          src={imageUrl}
+          alt="Chiskop visual"
+          fill
+          className="object-cover"
+          sizes="50vw"
+        />
       </div>
 
       {/* ───────────── LEFT SIDE (matches ProductSolutions width) ───────────── */}
@@ -45,20 +41,7 @@ Start with the Hair Removal Cream for a smooth chiskop, then finish with the Soo
             </div>
           </div>
 
-          {/* ───────────── Image (mobile only) ───────────── */}
-          <div className="block md:hidden w-full h-[340px] pb-6 sm:h-[380px] mt-6">
-            {imageUrl ? (
-              <Image
-                src={imageUrl}
-                alt="Chiskop visual"
-                width={1200}
-                height={800}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full bg-linear-to-r from-chiskop-black to-chiskop-offWhite" />
-            )}
-          </div>
+          {/* Mobile image hidden - desktop only */}
         </div>
       </div>
     </section>

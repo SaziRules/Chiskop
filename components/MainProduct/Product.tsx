@@ -9,7 +9,7 @@ import ShopNowButton from "../ui/ShopNowButton";
 
 interface ProductProps {
   product: {
-    _id: string;   // ← ADD THIS
+    _id: string;
     title: string;
     introDescription?: any[];
     featureBadges?: string[];
@@ -21,7 +21,6 @@ interface ProductProps {
     }[];
   };
 }
-
 
 export default function Product({ product }: ProductProps) {
   const { title, introDescription, featureBadges, variants } = product;
@@ -40,6 +39,21 @@ export default function Product({ product }: ProductProps) {
     ? current.variantFeatures
     : featureBadges ?? [];
 
+  const handleVariantClick = (index: number) => {
+    console.log('🎯 Variant clicked:', {
+      index,
+      sizeLabel: variants[index]?.sizeLabel,
+      previousActive: active
+    });
+    setActive(index);
+  };
+
+  console.log('🎨 Product component render:', {
+    activeIndex: active,
+    activeVariant: current?.sizeLabel,
+    totalVariants: variants.length
+  });
+
   return (
     <Section
       variant="default"
@@ -49,25 +63,23 @@ export default function Product({ product }: ProductProps) {
         {/* ───────────── Top Two-Column Layout ───────────── */}
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-16">
           {/* LEFT — Product Image */}
-<div className="flex justify-center md:justify-left bg-[#f7f7f7] py-2">
-  <div
-    key={current.img} // IMPORTANT: forces animation per image change
-    className="transition-opacity duration-500 ease-in-out opacity-0 animate-fadeIn"
-  >
-    <Image
-      src={
-        current?.img ||
-        "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
-      }
-      alt={title || "Chiskop Product"}
-      width={500}
-      height={500}
-      className="object-contain w-auto h-[400px] md:h-[520px]"
-    />
-  </div>
-</div>
-
-
+          <div className="flex justify-center md:justify-left bg-[#f7f7f7] py-2">
+            <div
+              key={current.img} // IMPORTANT: forces animation per image change
+              className="transition-opacity duration-500 ease-in-out opacity-0 animate-fadeIn"
+            >
+              <Image
+                src={
+                  current?.img ||
+                  "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                }
+                alt={title || "Chiskop Product"}
+                width={500}
+                height={500}
+                className="object-contain w-auto h-[400px] md:h-[520px]"
+              />
+            </div>
+          </div>
 
           {/* RIGHT — Product Info */}
           <div className="flex flex-col justify-center space-y-5 max-w-[500px] mx-auto md:mx-0">
@@ -81,7 +93,7 @@ export default function Product({ product }: ProductProps) {
               {variants.map((v, i) => (
                 <button
                   key={i}
-                  onClick={() => setActive(i)}
+                  onClick={() => handleVariantClick(i)}
                   className={`text-[15px] md:text-[16px] font-semibold px-4 py-2 rounded-[10px] border-2 transition-colors ${
                     i === active
                       ? "bg-chiskop-red text-white border-chiskop-red"
@@ -100,10 +112,12 @@ export default function Product({ product }: ProductProps) {
               </p>
             </div>
 
-            {/* CTA */}
+            {/* CTA - Pass the active variant index */}
             <div className="flex justify-start">
-              <ShopNowButton productId={product._id} />
-
+              <ShopNowButton 
+                productId={product._id} 
+                variantIndex={active}
+              />
             </div>
           </div>
         </div>

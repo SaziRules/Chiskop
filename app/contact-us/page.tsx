@@ -10,13 +10,22 @@ export const metadata = {
 };
 
 export default async function ContactUsPage() {
-  // ⭐ Correct FAQ group for this page
+  // ⭐ Fixed FAQ query with complete modalContent
   const faq = await client.fetch(
     groq`*[_type == "faqGroup" && title == "Contact Us"][0]{
       title,
       faqs[]{
         question,
-        answer
+        answer,
+        richAnswer,
+        useModal,
+        modalContent {
+          title,
+          content,
+          "image": image.asset->url,
+          ctaText,
+          ctaLink
+        }
       }
     }`
   );

@@ -18,6 +18,7 @@ interface ProductItem {
   link: string;
   size: string;
   slug: string;
+  variantIndex: number; // ⭐ Added to track which variant this is
 }
 
 /* ───────────── FETCH ALL PRODUCTS + FLATTEN VARIANTS ───────────── */
@@ -68,29 +69,31 @@ async function fetchProductSolutions(): Promise<{
 
   const homeProductsRaw = allProducts.filter((p: any) => p.category === "home");
 
-  // Flatten variants and EXCLUDE 950G
+  // Flatten variants and EXCLUDE 950G, track variant index
   const home: ProductItem[] = homeProductsRaw.flatMap((product: any) =>
     product.variants
-      ?.filter((v: any) => v.sizeLabel !== "950G")
-      .map((v: any) => ({
+      ?.map((v: any, index: number) => ({ variant: v, originalIndex: index }))
+      .filter((item: any) => item.variant.sizeLabel !== "950G")
+      .map((item: any) => ({
         id: product._id,
         title: product.title,
-        category: `For Head & Body | ${v.sizeLabel}`,
-        img: v.img,
-        size: v.sizeLabel,
+        category: `For Head & Body | ${item.variant.sizeLabel}`,
+        img: item.variant.img,
+        size: item.variant.sizeLabel,
         link: `/mainProduct/${product.slug.current}`,
         slug: product.slug.current,
+        variantIndex: item.originalIndex, // ⭐ Store original index
       }))
   );
 
   /* ===================================================================================
-     SALON: DO NOT TOUCH THIS SECTION
+     SALON: DO NOT TOUCH THIS SECTION (but add variantIndex)
      =================================================================================== */
 
   const salonProductsRaw = allProducts.filter((p: any) => p.category === "salon");
 
   const salon: ProductItem[] = salonProductsRaw.flatMap((product: any) =>
-    product.variants?.map((v: any) => ({
+    product.variants?.map((v: any, index: number) => ({
       id: product._id,
       title: product.title,
       category: `For Head & Body | ${v.sizeLabel}`,
@@ -98,6 +101,7 @@ async function fetchProductSolutions(): Promise<{
       size: v.sizeLabel,
       link: `/mainProduct/${product.slug.current}`,
       slug: product.slug.current,
+      variantIndex: index, // ⭐ Track variant index
     }))
   );
 
@@ -171,7 +175,12 @@ export default function ProductSolutions() {
             <div key={i} className="bg-white overflow-hidden flex flex-col items-center relative">
 
               <div className="absolute top-4 left-4 z-10">
-                <BuyModal standalone productId={p.id} />
+                {/* ⭐ Now passing variantIndex */}
+                <BuyModal 
+                  standalone 
+                  productId={p.id} 
+                  variantIndex={p.variantIndex}
+                />
               </div>
 
               <Link href={p.link} className="w-full">
@@ -215,7 +224,7 @@ export default function ProductSolutions() {
 
       <Container className="max-w-[1200px] mx-auto px-6">
 
-        {/* ───────────── SALON SOLUTIONS (UNCHANGED) ───────────── */}
+        {/* ───────────── SALON SOLUTIONS ───────────── */}
         <h2 className="text-center mt-14 md:text-left text-chiskop-gray text-[20px] md:text-[28px] mb-10">
           SALON SOLUTIONS
         </h2>
@@ -225,7 +234,12 @@ export default function ProductSolutions() {
             <div key={i} className="bg-white overflow-hidden flex flex-col items-center relative">
 
               <div className="absolute top-4 left-4 z-10 w-9 h-9 md:w-10 md:h-10">
-                <BuyModal standalone productId={p.id} />
+                {/* ⭐ Now passing variantIndex */}
+                <BuyModal 
+                  standalone 
+                  productId={p.id}
+                  variantIndex={p.variantIndex}
+                />
               </div>
 
               <Link href={p.link} className="w-full">

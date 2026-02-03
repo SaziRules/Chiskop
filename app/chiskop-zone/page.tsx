@@ -13,14 +13,23 @@ export default async function ChiskopZonePage() {
   // ⭐ Fetch Page Hero
   const hero = await getPageHero("chiskop-zone");
 
-  // ⭐ Fetch FAQ for this page
+  // ⭐ Fetch FAQ for this page - FIXED QUERY
   const faq = await client.fetch(
     groq`
       *[_type == "faqGroup" && title == "Chiskop Zone"][0]{
         title,
         faqs[] {
           question,
-          answer
+          answer,
+          richAnswer,
+          useModal,
+          modalContent {
+            title,
+            content,
+            "image": image.asset->url,
+            ctaText,
+            ctaLink
+          }
         }
       }
     `
@@ -50,7 +59,6 @@ export default async function ChiskopZonePage() {
           headline={hero.headline}
           subtext={hero.subtext}
           alt={hero.alt}
-          height="h-[420px] md:h-[500px]"
         />
       )}
 
@@ -60,7 +68,7 @@ export default async function ChiskopZonePage() {
           <p className="text-[15px] md:text-[22px] text-chiskop-gray leading-relaxed">
             Welcome to the <strong>Chiskop Zone!</strong> Your go-to spot for
             everything Chiskop. From tips and how-tos to the latest competitions,
-            this is where you’ll find everything you need to get the most out of
+            this is where you'll find everything you need to get the most out of
             your Chiskop products.
           </p>
         </Container>

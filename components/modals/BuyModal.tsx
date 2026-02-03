@@ -11,6 +11,7 @@ interface BuyModalProps {
   open?: boolean;
   onClose?: () => void;
   productId?: string; // Sanity _id
+  variantIndex?: number; // Which variant (0, 1, 2, etc.)
 }
 
 interface StoreOption {
@@ -19,6 +20,13 @@ interface StoreOption {
 }
 
 interface ProductData {
+  variants?: {
+    sizeLabel?: string;
+    shopOptions?: {
+      online?: StoreOption[];
+      instore?: StoreOption[];
+    };
+  }[];
   shopOptions?: {
     online?: StoreOption[];
     instore?: StoreOption[];
@@ -30,38 +38,64 @@ export default function BuyModal({
   open,
   onClose,
   productId,
+  variantIndex = 0,
 }: BuyModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [product, setProduct] = useState<ProductData | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const active = open ?? isOpen;
 
-  /* ───────────── FETCH MINIMAL SHOP DATA ───────────── */
+  /* ───────────── FETCH VARIANT-SPECIFIC SHOP DATA ───────────── */
   useEffect(() => {
     if (!active || !productId) return;
 
     async function loadProduct() {
-      const query = `
-        *[_type == "product" && _id == $id][0]{
-          shopOptions{
-            online[]{
-              "logo": logo.asset->url,
-              url
+      console.log('🔍 BuyModal: Fetching data for variant index:', variantIndex);
+      setLoading(true);
+      
+      try {
+        const query = `
+          *[_type == "product" && _id == $id][0]{
+            variants[]{
+              sizeLabel,
+              shopOptions{
+                online[]{
+                  "logo": logo.asset->url,
+                  url
+                },
+                instore[]{
+                  "logo": logo.asset->url,
+                  url
+                }
+              }
             },
-            instore[]{
-              "logo": logo.asset->url,
-              url
+            shopOptions{
+              online[]{
+                "logo": logo.asset->url,
+                url
+              },
+              instore[]{
+                "logo": logo.asset->url,
+                url
+              }
             }
           }
-        }
-      `;
-      const data = await client.fetch(query, { id: productId });
-      setProduct(data);
+        `;
+        const data = await client.fetch(query, { id: productId });
+        console.log('✅ BuyModal: Data fetched:', data);
+        console.log('📦 Variant at index', variantIndex, ':', data?.variants?.[variantIndex]);
+        setProduct(data);
+      } catch (error) {
+        console.error('❌ BuyModal: Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadProduct();
-  }, [active, productId]);
+  }, [active, productId, variantIndex]); // ⭐ All three dependencies
 
   /* ───────────── MOUNT ───────────── */
   useEffect(() => setMounted(true), []);
@@ -79,19 +113,49 @@ export default function BuyModal({
   }, [mounted, active]);
 
   /* =======================================================================
-     FALLBACK LOGIC
+     GET VARIANT-SPECIFIC OR FALLBACK DATA
      ======================================================================= */
 
-  const online = product?.shopOptions?.online || [];
-  const instore = product?.shopOptions?.instore || [];
+  const variantData = product?.variants?.[variantIndex];
+  const variantShopOptions = variantData?.shopOptions;
+  const fallbackShopOptions = product?.shopOptions;
+
+  // Use variant-specific options if available, otherwise fallback to product-level
+  const online = variantShopOptions?.online || fallbackShopOptions?.online || [];
+  const instore = variantShopOptions?.instore || fallbackShopOptions?.instore || [];
 
   const noData = online.length === 0 && instore.length === 0;
+  const variantLabel = variantData?.sizeLabel || "";
 
-  /* ───────────── MODAL UI (EXACT ORIGINAL LAYOUT) ───────────── */
+  console.log('🎯 BuyModal Render:', {
+    variantIndex,
+    variantLabel,
+    onlineStores: online.length,
+    instoreStores: instore.length,
+    loading
+  });
+
+  /* ───────────── MODAL UI ───────────── */
+  const handleBackdropClick = () => {
+    console.log('🚪 Backdrop clicked - closing modal');
+    setIsOpen(false);
+    onClose?.();
+  };
+
+  const handleModalClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent clicks inside modal from closing it
+  };
+
   const ModalUI = (
-    <div className="fixed inset-0 z-10000 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+    <div 
+      className="fixed inset-0 z-10000 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+      onClick={handleBackdropClick}
+    >
 
-      <div className="bg-white rounded-[10px] shadow-xl max-w-[420px] w-full p-6 relative text-chiskop-black overflow-y-auto max-h-[90vh]">
+      <div 
+        className="bg-white rounded-[10px] shadow-xl max-w-[420px] w-full p-6 relative text-chiskop-black overflow-y-auto max-h-[90vh]"
+        onClick={handleModalClick}
+      >
 
         {/* Close */}
         <button
@@ -104,16 +168,42 @@ export default function BuyModal({
           ×
         </button>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-8">
+            <p className="text-chiskop-gray">Loading stores...</p>
+          </div>
+        )}
+
         {/* ───────────── If NO DATA ───────────── */}
-        {noData && (
-          <p className="text-center text-chiskop-gray text-[14px] py-6">
-            Store information is not yet available.
-          </p>
+        {!loading && noData && (
+          <div className="text-center py-6">
+            {variantLabel && (
+              <p className="text-[16px] font-semibold text-chiskop-black mb-2">
+                {variantLabel}
+              </p>
+            )}
+            <p className="text-[14px] text-chiskop-gray">
+              Store information is not yet available for this variant.
+            </p>
+          </div>
         )}
 
         {/* ───────────── SHOP ONLINE ───────────── */}
-        {!noData && (
+        {!loading && !noData && (
           <>
+            {/* Show variant label if available */}
+            {variantLabel && (
+              <div className="mb-4 pb-3 border-b border-chiskop-offWhite">
+                <p className="text-[14px] text-chiskop-gray">
+                  Shopping for:{" "}
+                  <span className="font-semibold text-chiskop-black">
+                    {variantLabel}
+                  </span>
+                </p>
+              </div>
+            )}
+
             <h3 className="text-[22px] font-semibold mb-1">Shop Online</h3>
             <p className="text-[14px] text-chiskop-gray mb-4">
               Get your Chiskop fix delivered to your door
