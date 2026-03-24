@@ -11,7 +11,7 @@ import PredictiveSearch from "@/components/search/PredictiveSearch";
 export default function Navbar() {
   const pathname = usePathname();
   // DO NOT RENDER NAVBAR ON SANITY STUDIO ROUTES
-  if (pathname?.startsWith("/studio")) return null;
+  if (pathname?.startsWith("/studio") || pathname?.startsWith("/admin")) return null;
   
   const [open, setOpen] = useState(false);
   const [newsletterOpen, setNewsletterOpen] = useState(false);

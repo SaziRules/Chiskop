@@ -23,7 +23,7 @@ export default function BrandInfo() {
 
         {/* Signature Line */}
         <p className="text-chiskop-black text-[17px] leading-relaxed font-semibold italic">
-          Chiskop for Men; made for the Chiskop Man.
+          Chiskop for Men, made for the Chiskop Man.
         </p>
       </Container>
     </Section>

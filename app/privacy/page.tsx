@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
             </h2>
             <p className="text-[15px] md:text-[16px] text-chiskop-gray leading-relaxed">
               Our website may use cookies or similar technologies to enhance your browsing
-              experience, analyze site traffic, and understand user behavior. You can
+              experience, analyse site traffic, and understand user behavior. You can
               disable cookies through your browser settings if you prefer.
             </p>
           </div>

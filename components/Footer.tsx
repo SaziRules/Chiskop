@@ -8,7 +8,7 @@ export default function Footer() {
   const pathname = usePathname();
 
   // Hide on Sanity Studio routes
-  if (pathname?.startsWith("/studio")) return null;
+  if (pathname?.startsWith("/studio") || pathname?.startsWith("/admin")) return null;
 
   return (
     <footer className="bg-[#f9f7f6] text-chiskop-black">
