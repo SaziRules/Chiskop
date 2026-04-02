@@ -48,6 +48,21 @@ export default defineType({
       description: "Displayed unless overridden at variant level.",
     }),
 
+    
+    defineField({
+  name: "howToBannerDesktop",
+  title: "How To Banner (Desktop)",
+  type: "image",
+  options: { hotspot: true },
+}),
+defineField({
+  name: "howToBannerMobile",
+  title: "How To Banner (Mobile)",
+  type: "image",
+  options: { hotspot: true },
+  description: "Optional — falls back to desktop image if not set",
+}),
+
     // ───────────── VARIANTS ARRAY ─────────────
     defineField({
       name: "variants",

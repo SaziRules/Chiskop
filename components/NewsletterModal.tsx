@@ -344,7 +344,7 @@ export default function NewsletterModal({ open, onClose }: NewsletterModalProps)
           {/* Right: Image */}
           <div className="relative hidden md:block">
             <Image
-              src="/images/newsletter.png"
+              src="/images/newsletter-modal.jpg"
               alt="Newsletter visual"
               fill
               className="object-cover"

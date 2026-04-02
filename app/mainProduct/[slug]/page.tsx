@@ -11,7 +11,6 @@ import ScrollToTop from "@/components/ScrollToTop";
 import type { Metadata } from "next";
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
-  // unwrap params (Next.js webpack)
   const { slug } = await params;
 
   const product = await client.fetch(
@@ -28,7 +27,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
 
   if (!product) {
     return {
-      title: "Product Not Found • Chiskop For Men"
+      title: "Product Not Found • Chiskop For Men",
     };
   }
 
@@ -44,14 +43,14 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     openGraph: {
       title: `${product.title} • Chiskop For Men`,
       description,
-      images: ogImage ? [{ url: ogImage }] : []
+      images: ogImage ? [{ url: ogImage }] : [],
     },
     twitter: {
       card: "summary_large_image",
       title: product.title,
       description,
-      images: ogImage ? [ogImage] : []
-    }
+      images: ogImage ? [ogImage] : [],
+    },
   };
 }
 
@@ -59,10 +58,8 @@ export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 export default function ProductPage(props: any) {
-  // Unwrap the params promise (Webpack 16 issue)
   const { slug } = use(props.params) as { slug: string };
 
-  // Fetch product with variant-specific shop options
   const product = use(
     client.fetch(
       groq`
@@ -102,7 +99,9 @@ export default function ProductPage(props: any) {
 
           usageContent,
           ingredientsText,
-          "video": tutorialVideo.asset->url
+          "video": tutorialVideo.asset->url,
+          "howToBannerDesktop": howToBannerDesktop.asset->url,
+          "howToBannerMobile": howToBannerMobile.asset->url
         }
       `,
       { slug }
@@ -122,7 +121,10 @@ export default function ProductPage(props: any) {
       <ScrollToTop />
       <Product product={product} />
 
-      <ProductHowToBanner />
+      <ProductHowToBanner
+        desktopImage={product.howToBannerDesktop ?? null}
+        mobileImage={product.howToBannerMobile ?? null}
+      />
 
       <ProductUsageSection
         usage={product.usageContent ?? []}

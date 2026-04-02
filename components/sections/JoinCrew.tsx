@@ -191,24 +191,19 @@ export default function JoinCrew() {
   };
 
   return (
-    <div style={{ aspectRatio: "1920 / 470" }}>
-    <Section
-      variant="default"
-      className="relative w-full h-full bg-[url('/images/footer-bg-desktop.jpg')] bg-cover bg-center bg-no-repeat overflow-hidden"
-    >
-      <Container className="relative z-10 max-w-[1400px] h-full flex flex-col md:flex-row items-center justify-end gap-10 md:gap-20 py-10 md:py-0">
-
-        {/* Form section */}
-        <div className="w-full md:w-[48%] flex flex-col items-center md:items-end text-left md:text-right">
-          <h2 className="uppercase text-chiskop-red font-extrabold text-[26px] md:text-[46px] leading-[1.05] mb-2 tracking-tight md:ml-auto max-w-none">
+    <>
+      {/* ── Mobile: gradient background, natural height ── */}
+      <div className="block md:hidden w-full bg-linear-to-b from-[#e8e7e5] to-[#f0eeeb] py-14 px-6">
+        <div className="flex flex-col items-center text-center max-w-[520px] mx-auto">
+          <h2 className="uppercase text-chiskop-red font-extrabold text-[26px] leading-[1.05] mb-2 tracking-tight">
             Join the Chiskop Crew
           </h2>
-          <p className="text-chiskop-black text-[15px] md:text-[18px] leading-[1.45] mt-1 md:mt-2 mb-8 max-w-[580px] md:ml-auto">
+          <p className="text-chiskop-black text-[15px] leading-[1.45] mt-1 mb-8">
             Be the first to know about new drops, competitions, and Chiskop specials. Join now and keep your game sharp.
           </p>
 
           {success ? (
-            <div className="flex flex-col items-center md:items-end gap-3 w-full max-w-[520px]">
+            <div className="flex flex-col items-center gap-3 w-full">
               <div className="w-12 h-12 rounded-full bg-chiskop-red/10 flex items-center justify-center">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#5A0004" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                   <polyline points="20 6 9 17 4 12" />
@@ -220,70 +215,119 @@ export default function JoinCrew() {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 max-w-[520px]">
-
-              {/* Row 1: Name + Phone */}
-              <div className="flex flex-col md:flex-row gap-3 md:gap-4 md:justify-end">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className={`flex-1 md:w-[270px] ${inputClass}`}
-                />
-                <PhoneField
-                  dialCode={dialCode}
-                  onDialChange={setDialCode}
-                  value={phone}
-                  onChange={setPhone}
-                  inputClass={inputClass}
-                />
-              </div>
-
-              {/* Desktop row: Submit + Email */}
-              <div className="hidden md:flex md:flex-row md:justify-end gap-3 md:gap-4 md:items-center">
-                <button type="submit" disabled={loading}
-                  className="btn bg-chiskop-red rounded-md text-white font-extrabold uppercase text-[15px] px-10 py-3 hover:bg-[#450003] transition disabled:opacity-50 disabled:cursor-not-allowed shrink-0">
-                  {loading ? "..." : "Submit"}
-                </button>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={`flex-1 md:w-[420px] ${inputClass}`}
-                />
-              </div>
-
-              {/* Mobile row: Email + Submit */}
-              <div className="flex flex-col md:hidden gap-3">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={`w-full ${inputClass}`}
-                />
-                <button type="submit" disabled={loading}
-                  className="btn bg-chiskop-red rounded-md text-white font-extrabold uppercase text-[13px] px-8 py-3 w-full hover:bg-[#450003] transition disabled:opacity-50 disabled:cursor-not-allowed">
-                  {loading ? "Submitting..." : "Submit"}
-                </button>
-              </div>
-
+            <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3">
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={`w-full ${inputClass}`}
+              />
+              <PhoneField
+                dialCode={dialCode}
+                onDialChange={setDialCode}
+                value={phone}
+                onChange={setPhone}
+                inputClass={inputClass}
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={`w-full ${inputClass}`}
+              />
+              <button type="submit" disabled={loading}
+                className="btn bg-chiskop-red rounded-md text-white font-extrabold uppercase text-[13px] px-8 py-3 w-full hover:bg-[#450003] transition disabled:opacity-50 disabled:cursor-not-allowed">
+                {loading ? "Submitting..." : "Submit"}
+              </button>
               {error && (
-                <p className="text-red-600 text-[12px] font-medium text-right">{error}</p>
+                <p className="text-red-600 text-[12px] font-medium text-center">{error}</p>
               )}
             </form>
           )}
 
           <a href="/terms"
-            className="text-[12px] md:text-[12.5px] text-chiskop-gray underline mt-3 hover:text-chiskop-red transition-colors md:self-end">
+            className="text-[12px] text-chiskop-gray underline mt-3 hover:text-chiskop-red transition-colors">
             Terms &amp; Conditions
           </a>
         </div>
+      </div>
 
-      </Container>
-    </Section>
-    </div>
+      {/* ── Desktop: fixed aspect ratio with background image ── */}
+      <div className="hidden md:block" style={{ aspectRatio: "1920 / 470" }}>
+        <Section
+          variant="default"
+          className="relative w-full h-full bg-[url('/images/footer-bg-desktop.jpg')] bg-cover bg-center bg-no-repeat overflow-hidden"
+        >
+          <Container className="relative z-10 max-w-[1400px] h-full flex flex-col md:flex-row items-center justify-end gap-20 py-0">
+            <div className="w-full md:w-[48%] flex flex-col items-end text-right">
+              <h2 className="uppercase text-chiskop-red font-extrabold text-[46px] leading-[1.05] mb-2 tracking-tight ml-auto">
+                Join the Chiskop Crew
+              </h2>
+              <p className="text-chiskop-black text-[18px] leading-[1.45] mt-2 mb-8 max-w-[580px] ml-auto">
+                Be the first to know about new drops, competitions, and Chiskop specials. Join now and keep your game sharp.
+              </p>
+
+              {success ? (
+                <div className="flex flex-col items-end gap-3 w-full max-w-[520px]">
+                  <div className="w-12 h-12 rounded-full bg-chiskop-red/10 flex items-center justify-center">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#5A0004" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                  </div>
+                  <p className="text-[20px] font-extrabold uppercase text-chiskop-black">You&apos;re in!</p>
+                  <p className="text-[14px] font-normal text-chiskop-gray">
+                    Welcome to the crew. Watch this space for drops, specials, and more.
+                  </p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3 max-w-[520px]">
+                  <div className="flex flex-row gap-4 justify-end">
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className={`flex-1 w-[270px] ${inputClass}`}
+                    />
+                    <PhoneField
+                      dialCode={dialCode}
+                      onDialChange={setDialCode}
+                      value={phone}
+                      onChange={setPhone}
+                      inputClass={inputClass}
+                    />
+                  </div>
+
+                  <div className="flex flex-row justify-end gap-4 items-center">
+                    <button type="submit" disabled={loading}
+                      className="btn bg-chiskop-red rounded-md text-white font-extrabold uppercase text-[15px] px-10 py-3 hover:bg-[#450003] transition disabled:opacity-50 disabled:cursor-not-allowed shrink-0">
+                      {loading ? "..." : "Submit"}
+                    </button>
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className={`flex-1 w-[420px] ${inputClass}`}
+                    />
+                  </div>
+
+                  {error && (
+                    <p className="text-red-600 text-[12px] font-medium text-right">{error}</p>
+                  )}
+                </form>
+              )}
+
+              <a href="/terms"
+                className="text-[12.5px] text-chiskop-gray underline mt-3 self-end hover:text-chiskop-red transition-colors">
+                Terms &amp; Conditions
+              </a>
+            </div>
+          </Container>
+        </Section>
+      </div>
+    </>
   );
 }
