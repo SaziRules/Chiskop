@@ -31,7 +31,7 @@ export default function ReviewModal({ open, onClose, productSlug }: ReviewModalP
 
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const PHONE_RE = /^[\d\s\-+()]{7,20}$/;
-  const MIN_WORDS = 10;
+  const MIN_WORDS = 3;
 
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";

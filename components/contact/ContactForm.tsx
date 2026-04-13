@@ -233,7 +233,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-4">
 
         {/* Top row: Name + Surname */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
             className="contact-input"
             placeholder="Name"
@@ -251,7 +251,7 @@ export default function ContactForm() {
         </div>
 
         {/* Middle row: Phone + Email */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <PhoneField
             dialCode={dialCode}
             onDialChange={setDialCode}
