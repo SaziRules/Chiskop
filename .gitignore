@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# large/binary files
+*.exe
+*.msi
+*.msix
+*.dmg
+*.pkg
+*.app
