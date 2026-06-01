@@ -24,6 +24,7 @@ export default function Footer() {
               <li className="hover:text-chiskop-red cursor-pointer"><a href="/products">PRODUCTS</a></li>
               <li className="hover:text-chiskop-red cursor-pointer"><a href="/chiskop-zone">CHISKOP ZONE</a></li>
               <li className="hover:text-chiskop-red cursor-pointer"><a href="/salon">SALON ZONE</a></li>
+              <li className="hover:text-chiskop-red cursor-pointer"><a href="/competitions">COMPETITIONS</a></li>
             </ul>
           </div>
 

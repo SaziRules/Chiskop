@@ -1,0 +1,500 @@
+/* =======GENERAL STYLING======= */
+
+/* Reset some of the styles for the page */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+    background: #f4f4f4;
+    color: #333;
+}
+
+/* Layout for header */
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: #222;
+    color: white;
+    padding: 10px 20px;
+}
+.logo{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+nav ul{
+    list-style: none;
+    display: flex;
+    gap: 1.5em;
+}
+nav a{
+    color: white;
+    text-decoration: none;
+}
+
+/* layout for main left area */
+
+main{
+    display: flex;
+}
+
+.left{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+}
+
+.left-row1{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.left-row2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.left-row2-all{
+    width: 50%;
+}
+
+/* layout for main right area */
+.right{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+/* Layout for footer */
+footer{
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* Styles for tablets and smaller devices */
+@media screen and (max-width: 768px) {
+  main{
+    flex-direction: column;
+  }
+  .left-row2{
+    flex-wrap: wrap;
+  }
+  .left-row2-all{
+    width: 50%;
+  }
+}
+
+/* Styles for mobile and smaller devices */
+@media screen and (max-width: 450px) {
+  main{
+    flex-direction: column;
+  }
+  .left-row2{
+    flex-direction: column;
+  }
+  .left-row2-all{
+    width: 100%;
+  }
+}
+
+/* ################# START - TO DO LIST ################# */
+
+/* ===========STRUCTURE========== */
+
+        /* Overall container for entire to-to-list */
+        .container{
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        #todoContainer{
+            overflow-y: scroll;
+            height: 340px;
+        }
+
+        /* Basic structure of to-do rows */
+        .to-do-row{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+            gap: 10px;
+            height: 66px;
+        }
+
+        /* Basic Structure of priority circles */
+        .circle{
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: solid black 1px;
+        }
+
+        /* Radio Button input */
+        .radio-small{
+            width: 12px;
+            height: 12px;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /* Text field input setting width to take up available space */
+        .input-text{
+            flex-grow: 1;
+        }
+
+        /* To-Do item box */
+        .to-do-item{
+            width: 250px;
+            min-height: 52px;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: solid black 1px;
+            border-radius: 5px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1em;
+        }
+
+        /* =========SKIN========== */
+
+        .border-bottom{
+            border-bottom: solid black 2px;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        .bg-light{
+            background: lightgray;
+        }
+
+        .bg-red{
+            background: red;
+        }
+
+        .bg-orange{
+            background: orange;
+        }
+
+        .bg-gold{
+            background: gold;
+        }
+
+        .icon{
+            font-size: 1.5em;
+            color: black;
+        }
+
+        .icon:hover{
+            color: grey;
+        }
+
+
+/* ################# END - TO DO LIST ################# */
+
+/* ################# START - PERSONAL DEATILS ################# */
+
+ /* ==========STRUCTURE========== */
+
+    .profile-container{
+        height: 400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .profile-circle{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: solid white 5px;
+    }
+
+    .profile-title{
+        width: 100%;
+        height: 50px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 2.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0px;
+    }
+
+    .profile-quote{
+        width: 300px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.2em;
+        border-radius: 20px;
+    }
+
+    /* ===========SKIN=========== */
+    .profile-background{
+        background: url("_images/profile-bg1.jpg");
+        background-size: cover;
+    }
+
+    .profile-pic1{
+        background: url("_images/profile-pic1.jpg");
+        background-size: cover;
+    }
+
+    .bg-salmon{
+        background: #DB4C52;
+    }
+
+    .col-white{
+        color: white;
+    }
+
+    .col-black{
+        color: black;
+    }
+
+    .white-transp{
+        background: rgba(255, 255, 255, 0.75);
+    }
+
+/* ################# END - PERSONAL DEATILS ################# */
+
+/* ################# START - WEEKLY GOALS ################# */
+
+     /* ==========STRUCTURE========== */
+     #goals-item-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 10px;
+      height: 350px;
+     }   
+     
+     .goals-container{
+            height: 400px;
+            margin: 0 auto;
+    }
+
+    .goals-heading{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.5em;
+        height: 50px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .goal-box{
+        width: 93%;
+        /* height: 80px; */
+        border: solid 1px;
+        border-radius: 10px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .goal-box-text{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1em;
+        width: 250px;
+    }
+
+    /* ===========SKIN============ */
+    .goals-container-style{
+        background: #98DACB;
+    }
+    
+    .goals-heading-style{
+        background: #10997A;
+        color: white;
+    }
+
+    .goal-box-style{
+        border-color: #10997A;
+    }
+
+    .goal-icon{
+        font-size: 3em;
+        color: #10997A;
+    }
+
+    .text-teal{
+        color: #10997A;
+    }
+
+/* ################# END - WEEKLY GOALS ################# */
+
+/* ################# START - STUDY CLOCK ################# */
+
+     /* ===== STRUCTURE ===== */
+    .box {
+        padding: 20px;
+        text-align: center;
+        width: 100%;
+    }
+
+    /* ===== SKIN ===== */
+    .study-clock {
+        background: #10997A; /* sage green */
+    c   olor: white;
+    }
+
+    .title {
+        margin-bottom: 15px;
+        font-size: 1.5rem;
+    }
+
+    .clock-display {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 15px 0;
+        color: white;
+    }
+
+    button {
+        padding: 10px 15px;
+        border: none;
+        background: white;
+        color: #46624a; /* darker sage */
+        cursor: pointer;
+        border-radius: 15px;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background: #dfe8d4; /* lighter sage */
+    }
+
+/* ################# END - STUDY CLOCK ################# */
+
+/* ################# START - NOTES ################# */
+
+    /* ==========STRUCTURE========== */
+    .notes-container{
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
+    }
+    .notes-heading{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 1.6em;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+    }
+
+    .notes-box-text{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 1em;
+        width: 250px;
+    }
+
+    /* ===========SKIN============ */
+    .notes-container-style{
+        background: #e8de87;
+    }
+    
+    .notes-box-style{
+          display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 80%;
+        align-items: start;
+        padding-left: 30px;
+        color: #3F51B5;
+        font-family: cursive;
+        font-size: 1.2em;
+    }
+
+    .notes-box-style li{
+        border-bottom: solid brown 1px;
+        width: 80%;
+    }
+
+    .notes-heading-style{
+        background: brown;
+        color: white;
+    }
+
+
+    .text-white{
+        color: white;
+    }
+
+    .notes-icon{
+        font-size: 1.6em;
+        color: brown;
+        position: absolute;
+    }
+
+    .pencil-icon{
+        bottom: 20px;
+        right: 20px;
+    }
+
+    ul li{
+        list-style-type: none;
+    }
+
+/* ################# END - NOTES ################# */
+
+/* Under Construction / Coming Soon */
+.fa-triangle-exclamation{
+    color: rgb(255, 191, 0);
+    font-size: 3em;
+    position: absolute;
+    top: 10px; 
+    left: 10px;
+    z-index: 100
+}
+
+.fa-triangle-exclamation:hover{
+    color: red;
+    cursor: pointer;
+}
+
+#comingSoon{
+    display: none;
+    position: absolute;
+    width: 50vw;
+    height: 50vh;
+    background: gold;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2em;
+    text-align: center;
+    border: solid black 3px;
+    border-radius: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 200;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Layout Practise</title>
+    <!-- link to style sheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- link to font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- COMING SOON, PLEASE BE PATIENT -->
+     <div id="comingSoon">
+        <h1>
+            Please Be Patient
+        </h1>
+        <h2>This dashboard function is still under development.</h2>
+        <p onclick="closeWarning()" style="color: blue; text-decoration: underline; cursor: pointer;">[CLICK TO CLOSE]</p>
+     </div>
+
+
+    <!-- =====HEADER SECTION===== -->
+    <header>
+        <div class="logo">
+            LOGO
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- =====MAIN DASH AREA===== -->
+    <main>
+
+        <!-- ===LEFT AREA=== -->
+        <div class="left">
+
+            <!-- ==LEFT ROW 1== -->
+            <section class="left-row1">
+
+               <!-- TO-DO LIST -->
+                <div class="container">
+
+                    <!--Add Item -->
+                    <div class="to-do-row border-bottom">
+                        <i class="fas fa-plus icon" onclick="plusClicked()"></i>
+                        <input type="text" class="input-text">
+                        <div class="circle bg-red">
+                            <input type="radio" name="priority" class="radio-small" value="bg-red">
+                        </div>
+                        <div class="circle bg-orange">
+                            <input type="radio" name="priority" class="radio-small" value="bg-orange">
+                        </div>
+                        <div class="circle bg-gold">
+                            <input type="radio" name="priority" class="radio-small" value="bg-gold">
+                        </div>
+                    </div>
+
+                    <!-- To-Do Items -->
+                    <!-- Empty container where todo items will be dynamically added using JavaScript -->
+                    <div id="todoContainer"></div>
+                </div>
+                
+            </section>
+
+            <!-- ==LEFT ROW 2== -->
+            <div class="left-row2">
+
+                <!-- PROFILE INFO -->
+                <section class="left-row2-all">
+                    <div class="profile-container profile-background col-white">
+                        <div class="profile-circle profile-pic1"></div>
+                        <h1 class="profile-title bg-salmon">Chuck Norris</h1>
+                        <h2 class="profile-quote white-transp col-black">
+                            "I've always found that anything worth achieving will always have obstacles in the way."
+                        </h2>
+                    </div>
+                </section>
+
+                <!-- GOALS INFO -->
+                <section class="left-row2-all" style="position: relative;">
+                    <i class="fa-solid fa-triangle-exclamation" onclick="comingSoon()"></i>
+                    <div class="goals-container goals-container-style">
+                        <h1 class="goals-heading goals-heading-style">Weekly Goals
+                            <i class="fas fa-wrench"></i>
+                        </h1>
+                        <div id="goals-item-container">
+                            <div class="goal-box goal-box-style">
+                                <i class="fas fa-heart goal-icon"></i>
+                                <ul class="goal-box-text text-teal">
+                                    <li>Minimum 10000 steps per day.</li>
+                                    <li>Workout 3 times p/w.</li>
+                                </ul>
+                            </div>
+                            <div class="goal-box goal-box-style">
+                                <i class="fas fa-edit goal-icon"></i>
+                                <ul class="goal-box-text text-teal">
+                                    <li>Complete Part 1.3 of POE.</li>
+                                    <li>Do ICE Task 1 and 2</li>
+                                </ul>
+                            </div>
+                            <div class="goal-box goal-box-style">
+                                <i class="fas fa-cat goal-icon"></i>
+                                <ul class="goal-box-text text-teal">
+                                    <li>Take Cheddar for a walk.</li>
+                                    <li>Buy more treats for Cheddar.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+        </div>
+
+        <!-- ===RIGHT AREA=== -->
+        <div class="right">
+
+            <!-- STUDY CLOCK -->
+            <section style="flex: 1; position: relative;">
+                <i class="fa-solid fa-triangle-exclamation" onclick="comingSoon()"></i>
+                <div class="study-clock box">
+                    <h2 class="title">Study Clock</h2>
+                    <div class="clock-display time-display">25:00</div>
+
+                    <div class="controls cluster">
+                    <button class="start-pause">Start</button>
+                    <button class="reset">Reset</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NOTES -->
+            <section style="flex: 3; position: relative;">
+                <i class="fa-solid fa-triangle-exclamation" onclick="comingSoon()"></i>
+                 <div class="notes-container notes-container-style">
+                    <h1 class="notes-heading notes-heading-style">Notes</h1>
+                    <ul class="notes-box-style">
+                            <li>Study 1 hour per day.</li>
+                            <li>Practise my instrument.</li>
+                            <li>Rememeber to go for a walk.</li>
+                            <li>Do ICE Task 2 for Tech</li>
+                            <li>Feed the fish.</li>
+                            <li>Buy more fish food for fish.</li>
+                    </ul>
+                    <i class="fas fa-pencil-alt notes-icon pencil-icon"></i>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- =====FOOTER SECTION===== -->
+    <footer>
+        &copy; 2025 Acme Inc. All rights reserved.
+    </footer>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
