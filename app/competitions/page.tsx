@@ -48,8 +48,8 @@ export default function CompetitionsPage() {
               Competition Period
             </h2>
             <p className="text-[15px] md:text-[16px] text-chiskop-gray leading-relaxed">
-              This Competition is valid from <strong>01 June 2026 to 14 June 2026</strong> and voting will take place
-              until <strong>30 June 2026</strong>.
+              This Competition is valid from <strong>26 June 2026 to 12 July 2026</strong> and voting will take place
+              until <strong>31 July 2026</strong>.
             </p>
           </div>
 
