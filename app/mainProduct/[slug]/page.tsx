@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   };
 }
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 export const dynamicParams = true;
 
 export default function ProductPage(props: any) {
