@@ -1,13 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import { isValidEmail, isValidPhone } from "@/lib/chiskopValidation";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 // ─── Dial codes ───────────────────────────────────────────────────────────────
 
@@ -202,19 +196,20 @@ export default function ContactForm() {
     setFieldError("");
     const fullPhone = trimPhone ? `${dialCode}${trimPhone.replace(/\D/g, "")}` : "";
 
-    const { error } = await supabase
-      .from("contact_submissions")
-      .insert({
-        brand:   "chiskop",
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
         name:    `${name.trim()} ${surname.trim()}`.trim(),
         email:   email.trim(),
-        message: `Phone: ${fullPhone}\n\n${message.trim()}`,
-      });
+        phone:   fullPhone,
+        message: message.trim(),
+      }),
+    });
 
     setIsSubmitting(false);
 
-    if (error) {
-      console.error("Contact submit error:", error.message, error.code, error.details);
+    if (!res.ok) {
       setSubmitStatus("error");
       return;
     }
